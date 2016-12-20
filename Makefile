@@ -1,20 +1,23 @@
 ifeq ($(HOSTTYPE),)
 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
-NAME = libft_malloc_$(HOSTTYPE).so
+EXT = a
+NAME = libft_malloc_$(HOSTTYPE).$(EXT)
 
-SRC = main.c
+SRC = malloc.c
 OBJ = $(subst .c,.o,$(SRC))
 
 CC = clang
 CFLAGS = -Wall -Werror -Wextra -I libft/inc
 
 all: dep $(NAME)
-	$(CC) -lft -Llibft -o test $(NAME)
+	$(CC) -lft -Llibft -lft_malloc -L. -o test main.o
 
 $(NAME): $(OBJ)
 	ar rc $@ $^
 	ranlib $@
+	rm -rf libft_malloc.$(EXT)
+	ln -s $@ libft_malloc.$(EXT)
 
 clean:
 	rm -f $(OBJ)
