@@ -7,11 +7,14 @@ NAME = libft_malloc_$(HOSTTYPE).$(EXT)
 SRC = malloc.c
 OBJ = $(subst .c,.o,$(SRC))
 
-CC = clang
-CFLAGS = -Wall -Werror -Wextra -I libft/inc
+export CC = clang
+export CFLAGS = -Wall -Werror -Wextra -Iinc
 
-all: dep $(NAME)
-	$(CC) -lft -Llibft -lft_malloc -L. -o test main.o
+all: dep $(NAME) main.c
+	$(CC) -Iinc -lft -Llibft -lft_malloc -L. -o test main.c
+
+%.o:%.c inc/malloc.h
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(NAME): $(OBJ)
 	ar rc $@ $^

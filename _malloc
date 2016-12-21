@@ -1,0 +1,147 @@
+#include <malloc.h>
+
+void debug(size_t size) {
+	SPRINTF("size: %zu\n", size);
+	SPRINTF("getpagesize: %d\n", getpagesize());
+
+	int ressources[9] = {
+		RLIMIT_CORE,
+		RLIMIT_CPU,
+		RLIMIT_DATA,
+		RLIMIT_FSIZE,
+		RLIMIT_MEMLOCK,
+		RLIMIT_NOFILE,
+		RLIMIT_NPROC,
+		RLIMIT_RSS,
+		RLIMIT_STACK
+	};
+
+	char *ressources_strings[9] = {
+		"RLIMIT_CORE",
+		"RLIMIT_CPU",
+		"RLIMIT_DATA",
+		"RLIMIT_FSIZE",
+		"RLIMIT_MEMLOCK",
+		"RLIMIT_NOFILE",
+		"RLIMIT_NPROC",
+		"RLIMIT_RSS",
+		"RLIMIT_STACK"
+	};
+
+	int i = 0;
+	while (i < 9)
+	{
+		struct rlimit l;
+		int resource = ressources[i];
+		ft_bzero(&l, sizeof(struct rlimit));
+		int rlimit = getrlimit(resource, &l);
+
+		SPRINTF("%d: %s\n", resource, ressources_strings[i]);
+		SPRINTF("\trlimit return: %d\n", rlimit);
+		SPRINTF("\trlim_cur %llu | rlim_max %llu\n", l.rlim_cur, l.rlim_max);
+		i += 1;
+	}
+}
+
+void *malloc(size_t size) {
+	// (void)size;
+	// #define SIZE getpagesize() * 10
+
+	static first_call;
+	size_t page_size = getpagesize();
+
+	static void *oldp;
+	void *p;
+
+	p = NULL;
+	if (size > page_size)
+		p = mmap(0, size, PROT_WRITE | PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+	else {
+		if (first_call == 0) {
+			oldp = mmap(0, page_size * 10, PROT_WRITE | PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+			SPRINTF("A %d\n", size);
+		}
+		else {
+			SPRINTF("B %d\n", size);
+		}
+	}
+
+	// SPRINTF("%8d\n", SIZE);
+	// SPRINTF("%8x\n", SIZE);
+	// SPRINTF("%8x\n", SIZE - 16);
+
+	// SPRINTF("%8x\n", USHRT_MAX);
+	// SPRINTF("%8f\n", (double)USHRT_MAX / (double)SIZE);
+
+	// SPRINTF("%8d\n", 0xFFFF / 2);
+	// SPRINTF("%8x\n", 0xFFFF / 2);
+
+
+	// #define STEP 0x1
+	// #define STEP2 ( STEP * 2 )
+	// #define STEP3 ( STEP2 * 4 )
+	// #define STEP4 ( STEP3 * 8 )
+	// #define STEP5 ( STEP4 * 16 )
+	// #define STEP6 ( STEP5 * 32 )
+
+	// int i = 11;
+	// SPRINTF("%p\n", p);
+	// SPRINTF("%p\t%p (%ld)\n",
+	// 		(p + (STEP * 3) * i),
+	// 		(void *)((void *)( (unsigned long)p | ((STEP * 3) * i) ) - p),
+	// 		(long)((void *)( (unsigned long)p | ((STEP * 3) * i) ) - p)
+	// 	);
+
+	// SPRINTF("%d\n", SIZE / STEP)
+	// SPRINTF("%d\n", SIZE / STEP2)
+	// SPRINTF("%d\n", SIZE / STEP3)
+	// SPRINTF("%d\n", SIZE / STEP4)
+	// SPRINTF("%d\n", SIZE / STEP5)
+	// SPRINTF("%d\n", SIZE / STEP6)
+
+	// int i = 0;
+	// while (i < SIZE) {
+	// 	((char *)p)[i] = i;
+	// 	i += 1;
+	// }
+	// int i = 0;
+	// while (i < 8) {
+	// 	SPRINTF("-> %d\n", i);
+
+	// 	SPRINTF("%p\t%p (%ld)\n",
+	// 		(p + STEP * i),
+	// 		(void *)( ( (long)p + (STEP * i) ) - (long)p),
+	// 		(long)( ( (long)p + (STEP * i) ) - (long)p)
+	// 	);
+	// 	SPRINTF("%p\t%p (%ld)\n",
+	// 		(p + (STEP2) * i),
+	// 		(void *)( ( (long)p + ((STEP2) * i) ) - (long)p),
+	// 		(long)( ( (long)p + ((STEP2) * i) ) - (long)p)
+	// 	);
+	// 	SPRINTF("%p\t%p (%ld)\n",
+	// 		(p + (STEP3) * i),
+	// 		(void *)( ( (long)p + ((STEP3) * i) ) - (long)p),
+	// 		(long)( ( (long)p + ((STEP3) * i) ) - (long)p)
+	// 	);
+
+	// 	i += 1;
+	// }
+	// SPRINTF("%8p\n", p + getpagesize());
+
+	// *((char*)p) = 0x42;
+	// *((char*)p + getpagesize() - 1) = 0x42;
+	if (p == MAP_FAILED)
+		SPRINTF("errno: %d: %s\n", errno, strerror(errno));
+
+	// int i = 0;
+	// while (i < getpagesize()) {
+	// 	SPRINTF("%3x", ((char *)p)[i]);
+	// 	if (i % 64 == 63) {
+	// 		SPRINTF("\n");
+	// 	}
+	// 	i += 1;
+	// }
+
+	return (p);
+}
+
