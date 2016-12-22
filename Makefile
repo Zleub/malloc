@@ -4,15 +4,15 @@ endif
 EXT = a
 NAME = libft_malloc_$(HOSTTYPE).$(EXT)
 
-SRC = malloc.c
+SRC = malloc.c utils.c
 OBJ = $(subst .c,.o,$(SRC))
 
 export CC = clang
 export CFLAGS = -Wall -Werror -Wextra -Iinc
 
 all: dep $(NAME) main.c
-	$(CC) -D FT_MALLOC	main.c -Iinc -L. -lft_malloc -Llibft -lft -o test
-	$(CC) 				main.c -Iinc -Llibft -lft -o temoin
+	$(CC) -D FT_MALLOC main.c -Iinc -L. -lft_malloc -Llibft -lft -o test
+	$(CC) main.c -Iinc -Llibft -lft -o temoin
 
 %.o:%.c inc/malloc.h
 	$(CC) $(CFLAGS) -o $@ -c $<
