@@ -38,7 +38,7 @@ void debug(size_t size) {
 
 		SPRINTF("%d: %s\n", resource, ressources_strings[i]);
 		SPRINTF("\trlimit return: %d\n", rlimit);
-		SPRINTF("\trlim_cur %lu | rlim_max %lu\n", l.rlim_cur, l.rlim_max);
+		SPRINTF("\trlim_cur %llu | rlim_max %llu\n", l.rlim_cur, l.rlim_max);
 		i += 1;
 	}
 }
@@ -66,20 +66,20 @@ void show_alloc_mem() {
 }
 
 void *malloc(size_t size) {
+	// static void* mypage;
+
 	size_t page_size = getpagesize();
 
 	void *p;
 
 	p = NULL;
-	if (size > page_size)
+	if (size >= page_size - 16)
 		p = mmap(0, size, PROT_WRITE | PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 	else {
 		if (oldp == 0) {
 			oldp = mmap(0, page_size * 10, PROT_WRITE | PROT_READ, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
-			TOBH(oldp) = (struct binaryheap){ size, (page_size * 10) / 2, 0 };
-			TOBH((oldp + page_size * 10 / 2)) = (struct binaryheap){ 0, (page_size * 10) / 2, 1 };
+			TOBH(oldp) = (struct binaryheap){ size, (page_size * 10), 0 };
 
-			SPRINTF("first allocation\n");
 			p = oldp + sizeof(struct binaryheap);
 		}
 		else {
@@ -89,8 +89,8 @@ void *malloc(size_t size) {
 				( TOBH(newp).is_free == 1 && (int)(size + sizeof(struct binaryheap)) < TOBH(newp).mult && (mark = 1)) ||
 				( (int)(TOBH(newp).size + sizeof(struct binaryheap)) < TOBH(newp).mult / 2 && (int)(size + sizeof(struct binaryheap)) < TOBH(newp).mult / 2 && (mark = 2) )
 			)) {
-				if (newp == oldp + page_size * 10)
-					return  (NULL);
+				if (newp >= oldp + page_size * 10)
+					return (NULL);
 				newp = newp + TOBH(newp).mult;
 			}
 
@@ -99,26 +99,34 @@ void *malloc(size_t size) {
 				return newp + sizeof(struct binaryheap);
 			}
 
-				// SPRINTF("----BEFORE--------\n");
-				// print_from_pointer(newp + TOBH(newp).mult / 2);
-				// SPRINTF("-----------------\n");
 			TOBH((newp + TOBH(newp).mult / 2)) = (struct binaryheap){ size, TOBH(newp).mult / 2, 0 };
-				// print_from_pointer(newp + TOBH(newp).mult / 2);
-				// SPRINTF("-----AFTER-------\n");
 			TOBH(newp) = (struct binaryheap){ TOBH(newp).size, TOBH(newp).mult / 2, TOBH(newp).is_free };
 
 			p = (newp + TOBH(newp).mult) + sizeof(struct binaryheap);
 		}
 	}
+
 	if (p == MAP_FAILED)
 		SPRINTF("errno: %d: %s\n", errno, strerror(errno));
 
-	SPRINTF("-> %p\n", p);
 	return (p);
 }
 
 void free(void *p) {
 	if (p == 0)
 		return ;
-	TOBH((p - sizeof(struct binaryheap))).is_free = 1;
+
+	void *newp = p - sizeof(struct binaryheap);
+	TOBH(newp).is_free = 1;
+
+	if ( (newp + TOBH(newp).mult) < oldp + getpagesize() * 10 &&
+		TOBH((newp + TOBH(newp).mult)).is_free &&
+		( TOBH((newp + TOBH(newp).mult)).mult == TOBH(newp).mult ) ) {
+		TOBH(newp) = (struct binaryheap){ TOBH(newp).size, TOBH(newp).mult * 2, 1 };
+	}
+	if ( (newp - TOBH(newp).mult) < oldp + getpagesize() * 10 &&
+		TOBH((newp - TOBH(newp).mult)).is_free &&
+		( TOBH((newp - TOBH(newp).mult)).mult == TOBH(newp).mult ) ) {
+		TOBH((newp - TOBH(newp).mult)) = (struct binaryheap){ TOBH(newp).size, TOBH(newp).mult * 2, 1 };
+	}
 }
