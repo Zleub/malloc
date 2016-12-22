@@ -17,6 +17,14 @@
 
 #define LARGE 4096
 
+struct binaryheap
+{
+	short	size;
+	short	mult;
+	int		is_free;
+};
+
+
 void free(void *ptr);
 void *malloc(size_t size);
 void *realloc(void *ptr, size_t size);

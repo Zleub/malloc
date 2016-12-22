@@ -45,13 +45,6 @@ void debug(size_t size) {
 
 # define TOBH(x) (*(struct binaryheap *)x)
 
-struct binaryheap
-{
-	short	size;
-	short	mult;
-	int		is_free;
-};
-
 void print_from_pointer(void *p) {
 	struct binaryheap *dt;
 
@@ -93,8 +86,8 @@ void *malloc(size_t size) {
 			void *newp = oldp;
 			int mark = 0;
 			while (!(
-				( TOBH(newp).is_free == 1 && (short)(size + sizeof(struct binaryheap)) < TOBH(newp).mult && (mark = 1)) ||
-				(TOBH(newp).size < TOBH(newp).mult / 2 && (short)(size + sizeof(struct binaryheap)) < TOBH(newp).mult / 2 && (mark = 2) )
+				( TOBH(newp).is_free == 1 && (int)(size + sizeof(struct binaryheap)) < TOBH(newp).mult && (mark = 1)) ||
+				( (int)(TOBH(newp).size + sizeof(struct binaryheap)) < TOBH(newp).mult / 2 && (int)(size + sizeof(struct binaryheap)) < TOBH(newp).mult / 2 && (mark = 2) )
 			)) {
 				if (newp == oldp + page_size * 10)
 					return  (NULL);
@@ -106,10 +99,15 @@ void *malloc(size_t size) {
 				return newp + sizeof(struct binaryheap);
 			}
 
+				// SPRINTF("----BEFORE--------\n");
+				// print_from_pointer(newp + TOBH(newp).mult / 2);
+				// SPRINTF("-----------------\n");
 			TOBH((newp + TOBH(newp).mult / 2)) = (struct binaryheap){ size, TOBH(newp).mult / 2, 0 };
+				// print_from_pointer(newp + TOBH(newp).mult / 2);
+				// SPRINTF("-----AFTER-------\n");
 			TOBH(newp) = (struct binaryheap){ TOBH(newp).size, TOBH(newp).mult / 2, TOBH(newp).is_free };
 
-			p = (newp + TOBH(newp).mult / 2) + sizeof(struct binaryheap);
+			p = (newp + TOBH(newp).mult) + sizeof(struct binaryheap);
 		}
 	}
 	if (p == MAP_FAILED)
