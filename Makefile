@@ -11,13 +11,14 @@ export CC = clang
 export CFLAGS = -Wall -Werror -Wextra -Iinc
 
 all: dep $(NAME) main.c
-	$(CC) main.c -Iinc -L. -lft_malloc -Llibft -lft -o test
+	$(CC) -D FT_MALLOC	main.c -Iinc -L. -lft_malloc -Llibft -lft -o test
+	$(CC) 				main.c -Iinc -Llibft -lft -o temoin
 
 %.o:%.c inc/malloc.h
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(NAME): $(OBJ)
-	ar vrc $@ $^ libft/libft.a
+	ar rc $@ $^ libft/libft.a
 	ranlib $@
 	rm -rf libft_malloc.$(EXT)
 	ln -s $@ libft_malloc.$(EXT)
