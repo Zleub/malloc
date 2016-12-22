@@ -38,7 +38,7 @@ void debug(size_t size) {
 
 		SPRINTF("%d: %s\n", resource, ressources_strings[i]);
 		SPRINTF("\trlimit return: %d\n", rlimit);
-		SPRINTF("\trlim_cur %llu | rlim_max %llu\n", l.rlim_cur, l.rlim_max);
+		SPRINTF("\trlim_cur %lu | rlim_max %lu\n", l.rlim_cur, l.rlim_max);
 		i += 1;
 	}
 }
@@ -88,11 +88,11 @@ void *malloc(size_t size) {
 		else {
 			void *newp = oldp + TOBH(oldp).mult;
 
-			if ( TOBH(newp).is_free == 1 && (short)size < TOBH(newp).mult ) {
+			if ( TOBH(newp).is_free == 1 && (short)(size + sizeof(struct binaryheap)) < TOBH(newp).mult ) {
 				TOBH(newp) = (struct binaryheap){ size, TOBH(newp).mult, 0 };
 				p = newp + sizeof(struct binaryheap);
 			}
-			else if (TOBH(oldp).size < TOBH(oldp).mult / 2 && (short)size < TOBH(oldp).mult / 2) {
+			else if (TOBH(oldp).size < TOBH(oldp).mult / 2 && (short)(size + sizeof(struct binaryheap)) < TOBH(oldp).mult / 2) {
 
 				TOBH((oldp + TOBH(oldp).mult / 2)) = (struct binaryheap){ size, TOBH(oldp).mult / 2, 0 };
 				TOBH(oldp) = (struct binaryheap){ TOBH(oldp).size, TOBH(oldp).mult / 2, 0 };
@@ -101,8 +101,11 @@ void *malloc(size_t size) {
 			}
 			else {
 				void *newp = oldp;
-				while (!(TOBH(newp).size < TOBH(newp).mult / 2 && (short)size < TOBH(newp).mult / 2))
+				while (!(TOBH(newp).size < TOBH(newp).mult / 2 && (short)(size + sizeof(struct binaryheap)) < TOBH(newp).mult / 2)) {
+					if (newp == oldp + page_size * 10)
+						return  (NULL);
 					newp = newp + TOBH(newp).mult;
+				}
 
 				TOBH((newp + TOBH(newp).mult / 2)) = (struct binaryheap){ size, TOBH(newp).mult / 2, 0 };
 				TOBH(newp) = (struct binaryheap){ TOBH(newp).size, TOBH(newp).mult / 2, 0 };
