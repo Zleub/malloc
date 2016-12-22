@@ -6,7 +6,7 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/22 21:01:33 by adebray           #+#    #+#             */
-/*   Updated: 2016/12/22 23:13:30 by adebray          ###   ########.fr       */
+/*   Updated: 2016/12/22 23:26:54 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*get_next_bloc(void *chunk, size_t size)
 	{
 		newp = newp + TOBH(newp).mult;
 		if (newp >= chunk + CHUNK_SIZE) {
-			SPRINTF("THIS IS IT\n");
+			SPRINTF("TEST\n");
 			return (NULL);
 		}
 	}
@@ -41,6 +41,8 @@ void	*get_next_bloc(void *chunk, size_t size)
 	return (newp + TOBH(newp).mult) + sizeof(struct binaryheap);
 }
 
+#define INDEX(x) (((void **)g_oldp)[x])
+
 void	*malloc(size_t size)
 {
 	if (size >= (size_t)(getpagesize() - 16))
@@ -50,13 +52,25 @@ void	*malloc(size_t size)
 		if (g_oldp == 0)
 		{
 			g_oldp = MMAP(getpagesize() * 4);
-			*((void **)g_oldp) = MMAP(CHUNK_SIZE);
-			// g_oldp = MMAP(CHUNK_SIZE);
-			TOBH(*((void **)g_oldp)) = (struct binaryheap){ size, (CHUNK_SIZE), 0 };
-			return (*((void **)g_oldp) + sizeof(struct binaryheap));
+			INDEX(0) = MMAP(CHUNK_SIZE);
+			TOBH(INDEX(0)) = (struct binaryheap){ size, (CHUNK_SIZE), 0 };
+			return (INDEX(0) + sizeof(struct binaryheap));
 		}
-		else
-			return (get_next_bloc(*((void **)g_oldp), size));
+		else {
+			int i = 0;
+			while (INDEX(i))
+			{
+				void *p = get_next_bloc(INDEX(i), size);
+				SPRINTF("%p in %p\n", p, INDEX(i));
+				if (p != 0)
+					return (p);
+				i += 1;
+			}
+			INDEX(i) = MMAP(CHUNK_SIZE);
+			TOBH(INDEX(i)) = (struct binaryheap){ size, (CHUNK_SIZE), 0 };
+			return (INDEX(i) + sizeof(struct binaryheap));
+			// return (get_next_bloc(INDEX(0), size));
+		}
 	}
 	return (NULL);
 }
