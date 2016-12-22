@@ -19,9 +19,9 @@
 
 struct binaryheap
 {
-	short	size;
-	short	mult;
-	int		is_free;
+	unsigned short	size;
+	unsigned short	mult;
+	unsigned int	is_free;
 };
 
 
