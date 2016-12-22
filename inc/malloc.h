@@ -24,6 +24,24 @@ struct binaryheap
 	unsigned int	is_free;
 };
 
+# define CHUNK_SIZE (getpagesize() * 8)
+
+# define CASTBH(alloc...) (struct binaryheap)alloc;
+# define SIZEBH(size) (int)(size + sizeof(struct binaryheap))
+# define TOBH(x) (*(struct binaryheap *)x)
+# define NEXTBH(x) (x + TOBH(x).mult)
+# define PREVBH(x) (x - TOBH(x).mult)
+# define HALFBH(x) (x + TOBH(x).mult / 2)
+
+# define SHRKBH(x) CASTBH({TOBH(x).size, TOBH(x).mult / 2, TOBH(x).is_free})
+
+# define IS_FREE(x) TOBH(x).is_free == 1
+
+# define PROT_FLAGS (PROT_WRITE | PROT_READ)
+# define MAP_FLAGS (MAP_ANONYMOUS | MAP_PRIVATE)
+# define MMAP(size) mmap(0, size, PROT_FLAGS, (MAP_FLAGS), -1, 0)
+
+extern void	*g_oldp;
 
 void free(void *ptr);
 void *malloc(size_t size);
