@@ -16,12 +16,12 @@
 // 	return (0);
 // }
 
-#define TESTSIZE 100
+#define TESTSIZE 20000
 
 void show_alloc_mem();
 int main(void) {
 
-	void *array[100] ={0};
+	void *array[TESTSIZE + 1] = {0};
 
 	int i = 1;
 	int j = 0;
@@ -29,28 +29,28 @@ int main(void) {
 	// debug();
 
 	while (i < TESTSIZE) {
-		// if ((i + 1) % 4 == 0) {
-		// 	int j = rand() % 50 + 5;
-		// 	SPRINTF("allocate %d\n", j);
-		// 	void *p = malloc( j );
-		// 	array[i] = p;
-		// 	strcpy(p, "test");
-		// }
-		// else
-		if ((i + 1) % 3 == 0) {
-			int j = rand() % i;
-			SPRINTF("free: %d %p\n", j, array[j])
-			free(array[j]);
+
+		if ((i + 1) % 2 == 0) {
+			while (rand() % TESTSIZE) {
+				int j = rand() % i;
+				free(array[j]);
+				array[j] = 0;
+				// j += 1;
+			}
 		}
 		else {
-			int j = rand() % 5000 + 5;
-			SPRINTF("allocate %d\n", j);
+			int j = rand() % 10 + 5;
 			void *p = malloc( j );
+			// SPRINTF("allocate %d @ %p\n", j, p ? p - sizeof(struct binaryheap) : p );
 			array[i] = p;
-			strcpy(p, "test");
+			// strcpy(p, "test");
 		}
 
-		show_alloc_mem();
+		// SPRINTF("----------------------------------------------\n");
 		i += 1;
 	}
+	// #ifdef FT_MALLOC
+	// 	show_alloc_mem();
+	// #endif
+	SPRINTF("ENDTEST\n");
 }
