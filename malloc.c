@@ -27,7 +27,7 @@ void	*get_next_bloc(void *chunk, size_t size)
 	{
 		newp = newp + TOBH(newp).mult;
 		if (newp >= chunk + CHUNK_SIZE) {
-			SPRINTF("TEST\n");
+			// SPRINTF("TEST\n");
 			return (NULL);
 		}
 	}
@@ -42,9 +42,13 @@ void	*get_next_bloc(void *chunk, size_t size)
 }
 
 #define INDEX(x) (((void **)g_oldp)[x])
+void show_alloc_mem();
 
 void	*malloc(size_t size)
 {
+	// SPRINTF("%zu\n", size);
+	// show_alloc_mem();
+
 	if (size >= (size_t)(getpagesize() - 16))
 		return (MMAP(size));
 	else
@@ -61,9 +65,10 @@ void	*malloc(size_t size)
 			while (INDEX(i))
 			{
 				void *p = get_next_bloc(INDEX(i), size);
-				SPRINTF("%p in %p\n", p, INDEX(i));
-				if (p != 0)
+				if (p != 0) {
+					// SPRINTF("%p in %p @ %d\n", p, INDEX(i), i);
 					return (p);
+				}
 				i += 1;
 			}
 			INDEX(i) = MMAP(CHUNK_SIZE);

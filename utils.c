@@ -21,16 +21,25 @@ void	print_from_pointer(void *p)
 		dt[0].is_free ? "FREE" : "OCCUPIED");
 }
 
+#define INDEX(x) (((void **)g_oldp)[x])
+
 void	show_alloc_mem(void)
 {
 	int	i;
+	int	j;
 
 	i = 0;
+	j = 0;
 	if (!g_oldp)
 		return ;
-	while (i < CHUNK_SIZE)
+	while (INDEX(j))
 	{
-		print_from_pointer(g_oldp + i);
-		i += TOBH((g_oldp + i)).mult;
+		SPRINTF("INDEX: %d\n", j);
+		while (i < CHUNK_SIZE)
+		{
+			print_from_pointer(INDEX(j) + i);
+			i += TOBH((INDEX(j) + i)).mult;
+		}
+		j += 1;
 	}
 }
