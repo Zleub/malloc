@@ -22,9 +22,10 @@ struct binaryheap
 	unsigned short	size;
 	unsigned short	mult;
 	unsigned int	is_free;
+	void			*parent;
 };
 
-# define CHUNK_SIZE (getpagesize() * 8)
+# define CHUNK_SIZE (getpagesize() * 2) // short limits
 
 # define CASTBH(alloc...) (struct binaryheap)alloc;
 # define SIZEBH(size) (int)(size + sizeof(struct binaryheap))
@@ -33,9 +34,9 @@ struct binaryheap
 # define PREVBH(x) (x - TOBH(x).mult)
 # define HALFBH(x) (x + TOBH(x).mult / 2)
 
-# define SHRKBH(x) CASTBH({TOBH(x).size, TOBH(x).mult / 2, TOBH(x).is_free})
+# define SHRKBH(x) CASTBH({TOBH(x).size, TOBH(x).mult / 2, TOBH(x).is_free, TOBH(x).parent})
 
-# define IS_FREE(x) TOBH(x).is_free == 1
+# define IS_FREE(x) (TOBH(x).is_free == 1)
 
 # define PROT_FLAGS (PROT_WRITE | PROT_READ)
 # define MAP_FLAGS (MAP_ANONYMOUS | MAP_PRIVATE)

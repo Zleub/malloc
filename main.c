@@ -16,45 +16,53 @@
 // 	return (0);
 // }
 
-#define TESTSIZE 1000000
+#define TESTSIZE 100000
 
-struct chain {
-	void	*self;
-	void	*next;
-};
+int global_call_cmp;
 
 void show_alloc_mem();
 int main(void) {
 
-	struct chain *c;
+	void *array[TESTSIZE + 1] = {0};
+
 	int i = 1;
 	int j = 0;
+	int cmp = 0;
+	global_call_cmp = 0;
+
+	// debug();
 
 	while (i < TESTSIZE) {
 
-	// 	if ((i + 1) % 6 == 0) {
-	// 		while (rand() % TESTSIZE / 20) {
-	// 			int j = rand() % i;
-	// 			free(array[j]);
-	// 			array[j] = 0;
-	// 			// j += 1;
-	// 		}
-	// 	}
-	// 	else {
-			// int j = rand() % 100 + 5;
-			c = malloc( sizeof(struct chain) );
-			// SPRINTF("allocate %d @ %p\n", j, p ? p - sizeof(struct binaryheap) : p );
-			c->self = c;
-			c = c->next;
-			// strncpy(p, "zadapkd aod apzokd apozdk apozkdaozd  paokdo  apdk apdk apd akd zadapkd aod apzokd apozdk apozkdaozd  paokdo  apdk apdk apd akd ", j);
+		// if ((i + 1) % 6 == 0) {
+		// 	while (rand() % TESTSIZE / 200) {
+		// 		int j = rand() % i;
+		// 		free(array[j]);
+		// 		array[j] = 0;
+		// 		// j += 1;
+		// 	}
+		// }
+		// else {
+			int j = rand() % (16 * 16 * 16 * 16) + 5;
+			void *p = malloc( j );
+			cmp += j;
+			if (p == 0)
+				SPRINTF("0x0\n");
+			#ifdef DEBUG
+			SPRINTF("allocate %d @ %p\n", j, p ? p - sizeof(struct binaryheap) : p );
+			#endif
+			array[i] = p;
+			strncpy(p, (char*)&main, j);
 		// }
 
-		// #ifdef FT_MALLOC
-		// 	SPRINTF("----------------------------------------------\n");
-		// 	show_alloc_mem();
-		// #endif
-		i += 1;
-	}
+		#ifdef DEBUG
+			SPRINTF("----------------------------------------------\n");
+			SPRINTF("%d\n", global_call_cmp);
+			show_alloc_mem();
+		#endif
 
-	SPRINTF("ENDTEST\n");
+		i += 1;
+		global_call_cmp += 1;
+	}
+	SPRINTF("ENDTEST %d\n", cmp);
 }

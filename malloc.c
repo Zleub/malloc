@@ -6,13 +6,18 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/22 21:01:33 by adebray           #+#    #+#             */
-/*   Updated: 2016/12/22 23:26:54 by adebray          ###   ########.fr       */
+/*   Updated: 2016/12/23 22:53:52 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <malloc.h>
 
 void	*g_oldp;
+
+extern int global_call_cmp;
+
+#define INDEX(x) (((void**)g_oldp)[x])
+void show_alloc_mem();
 
 void	*get_next_bloc(void *chunk, size_t size)
 {
@@ -21,43 +26,68 @@ void	*get_next_bloc(void *chunk, size_t size)
 
 	mark = 0;
 	newp = chunk;
+	// if (global_call_cmp > 60000)
+	// SPRINTF("%p %p %s\n", newp, chunk, TOBH(newp).parent == chunk ? "true" : "false");
 	while (!((IS_FREE(newp) && SIZEBH(size) < TOBH(newp).mult && (mark = 1)) ||
 		(SIZEBH(TOBH(newp).size) < TOBH(newp).mult / 2 &&
 			SIZEBH(size) < TOBH(newp).mult / 2 && (mark = 2))))
 	{
+		// if (IS_FREE(newp) && SIZEBH(size) > TOBH(newp).mult)
+		// 	free(newp + sizeof(struct binaryheap));
+		// SPRINTF("A\n");
+		if (TOBH(newp).mult == 0) {
+			SPRINTF("B @ %p\n", newp);
+			// show_alloc_mem(newp);
+			exit(-1);
+		}
 		newp = newp + TOBH(newp).mult;
 		if (newp >= chunk + CHUNK_SIZE) {
-			// SPRINTF("TEST\n");
 			return (NULL);
 		}
 	}
 	if (mark == 1)
 	{
-		TOBH(newp) = (struct binaryheap){ size, TOBH(newp).mult, 0 };
+		// SPRINTF("D\n");
+		TOBH(newp) = (struct binaryheap){ size, TOBH(newp).mult, 0, chunk };
 		return (newp + sizeof(struct binaryheap));
 	}
-	TOBH(HALFBH(newp)) = (struct binaryheap){ size, TOBH(newp).mult / 2, 0 };
+	// SPRINTF("E @ %p, parent: %p, parentsize %p, distanceformend: %lx\n", HALFBH(newp), TOBH(newp).parent, TOBH(newp).parent + CHUNK_SIZE, TOBH(newp).parent + CHUNK_SIZE - newp);
+	TOBH(HALFBH(newp)) = (struct binaryheap){ size, TOBH(newp).mult / 2, 0, chunk };
 	TOBH(newp) = SHRKBH(newp);
 	return (newp + TOBH(newp).mult) + sizeof(struct binaryheap);
 }
 
-#define INDEX(x) (((void **)g_oldp)[x])
-void show_alloc_mem();
+void debug_oldp(void *oldp, size_t size) {
+	size_t i = 0;
+
+	while ( i < size ) {
+		SPRINTF("%x", ((char*)oldp)[i]);
+		i += 1;
+	}
+	SPRINTF("\n");
+}
 
 void	*malloc(size_t size)
 {
 	// SPRINTF("%zu\n", size);
 	// show_alloc_mem();
 
-	if (size >= (size_t)(getpagesize() - 16))
-		return (MMAP(size));
+	if (size >= (size_t)(getpagesize() - 16)) {
+		void *p = MMAP(size + sizeof(struct binaryheap));
+		TOBH(p) = (struct binaryheap){ size, size, 0, 0 };
+		return (p + sizeof(struct binaryheap));
+	}
 	else
 	{
 		if (g_oldp == 0)
 		{
-			g_oldp = MMAP(getpagesize() * 4);
+			g_oldp = MMAP(getpagesize() * 8);
+			// ft_bzero(g_oldp, getpagesize() * 8);
 			INDEX(0) = MMAP(CHUNK_SIZE);
-			TOBH(INDEX(0)) = (struct binaryheap){ size, (CHUNK_SIZE), 0 };
+			// SPRINTF("%p\n", INDEX(0));
+			// debug_oldp(g_oldp, getpagesize());
+
+			TOBH(INDEX(0)) = (struct binaryheap){ size, (CHUNK_SIZE), 0, INDEX(0) };
 			return (INDEX(0) + sizeof(struct binaryheap));
 		}
 		else {
@@ -72,7 +102,10 @@ void	*malloc(size_t size)
 				i += 1;
 			}
 			INDEX(i) = MMAP(CHUNK_SIZE);
-			TOBH(INDEX(i)) = (struct binaryheap){ size, (CHUNK_SIZE), 0 };
+			if (INDEX(i) == MAP_FAILED) {
+				return (NULL);
+			}
+			TOBH(INDEX(i)) = (struct binaryheap){ size, (CHUNK_SIZE), 0, INDEX(i) };
 			return (INDEX(i) + sizeof(struct binaryheap));
 			// return (get_next_bloc(INDEX(0), size));
 		}
@@ -88,14 +121,31 @@ void	free(void *p)
 		return ;
 	newp = p - sizeof(struct binaryheap);
 	TOBH(newp).is_free = 1;
-	if (NEXTBH(newp) < g_oldp + CHUNK_SIZE && IS_FREE(NEXTBH(newp)) &&
+
+	if (TOBH(newp).size > CHUNK_SIZE) {
+		munmap(newp, TOBH(newp).size);
+		return ;
+	}
+	// SPRINTF("free @ %p, %d\n", newp, TOBH(newp).size);
+	if (NEXTBH(newp) < TOBH(newp).parent + CHUNK_SIZE && IS_FREE(NEXTBH(newp)) &&
 		(TOBH(NEXTBH(newp)).mult == TOBH(newp).mult))
+	{
+		// SPRINTF("A %d %d\n", TOBH(newp).mult, TOBH(newp).mult * 2);
 		TOBH(newp) = (struct binaryheap){
-			TOBH(newp).size, TOBH(newp).mult * 2, 1
+			TOBH(newp).size, TOBH(newp).mult * 2, 1, TOBH(newp).parent
 		};
-	if (PREVBH(newp) < g_oldp + CHUNK_SIZE && IS_FREE(PREVBH(newp)) &&
+		// free(newp + sizeof(struct binaryheap));
+	}
+	// SPRINTF("test %s\n", PREVBH(newp) > TOBH(newp).parent ? "true" : "false");
+	if (PREVBH(newp) > TOBH(newp).parent && IS_FREE(PREVBH(newp)) &&
 		(TOBH(PREVBH(newp)).mult == TOBH(newp).mult))
+	{
+		// SPRINTF("A %d %d\n", TOBH(PREVBH(newp)).mult, TOBH(PREVBH(newp)).mult * 2);
 		TOBH(PREVBH(newp)) = (struct binaryheap){
-			TOBH(PREVBH(newp)).size, TOBH(PREVBH(newp)).mult * 2, 1
+			TOBH(PREVBH(newp)).size, TOBH(PREVBH(newp)).mult * 2, 1,
+			TOBH(PREVBH(newp)).parent
 		};
+		// free(PREVBH(newp) + sizeof(struct binaryheap));
+	}
+	// show_alloc_mem();
 }

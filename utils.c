@@ -6,7 +6,7 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/22 22:49:34 by adebray           #+#    #+#             */
-/*   Updated: 2016/12/22 22:58:00 by adebray          ###   ########.fr       */
+/*   Updated: 2016/12/23 22:35:07 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ void	show_alloc_mem(void)
 	int	i;
 	int	j;
 
-	i = 0;
 	j = 0;
 	if (!g_oldp)
 		return ;
 	while (INDEX(j))
 	{
+		i = 0;
 		SPRINTF("INDEX: %d\n", j);
 		while (i < CHUNK_SIZE)
 		{

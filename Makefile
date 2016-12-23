@@ -11,8 +11,16 @@ export CC = clang
 export CFLAGS = -Wall -Werror -Wextra -Iinc
 
 all: dep $(NAME) main.c
-	$(CC) -O0 -D FT_MALLOC malloc-test.c -Iinc -L. -lft_malloc -Llibft -lft -o test
-	$(CC) -O0 malloc-test.c -Iinc -Llibft -lft -o temoin
+	$(CC) -g3 main.c -Iinc -L. -lft_malloc -Llibft -lft -o test
+	$(CC) -g3 main.c -Iinc -Llibft -lft -o temoin
+
+debug: dep $(NAME) main.c
+	$(CC) -g3 -D DEBUG=$(DEBUG) main.c -Iinc -L. -lft_malloc -Llibft -lft -o test
+	$(CC) -g3 main.c -Iinc -Llibft -lft -o temoin
+
+tests:
+	make all
+	fish test.fish
 
 %.o:%.c inc/malloc.h
 	$(CC) $(CFLAGS) -o $@ -c $<
