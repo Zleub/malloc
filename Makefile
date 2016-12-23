@@ -11,8 +11,8 @@ export CC = clang
 export CFLAGS = -Wall -Werror -Wextra -Iinc
 
 all: dep $(NAME) main.c
-	$(CC) -D FT_MALLOC main.c -Iinc -L. -lft_malloc -Llibft -lft -o test
-	$(CC) main.c -Iinc -Llibft -lft -o temoin
+	$(CC) -O0 -D FT_MALLOC malloc-test.c -Iinc -L. -lft_malloc -Llibft -lft -o test
+	$(CC) -O0 malloc-test.c -Iinc -Llibft -lft -o temoin
 
 %.o:%.c inc/malloc.h
 	$(CC) $(CFLAGS) -o $@ -c $<
