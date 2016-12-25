@@ -19,6 +19,17 @@ extern int global_call_cmp;
 #define INDEX(x) (((void**)g_oldp)[x])
 void show_alloc_mem();
 
+void debug_p(void *oldp, size_t size) {
+	size_t i = 0;
+
+	while ( i < size ) {
+		SPRINTF("%x ", ((unsigned char*)oldp)[i]);
+		i += 1;
+	}
+	SPRINTF("\n");
+}
+
+
 void	*get_next_bloc(void *chunk, size_t size)
 {
 	void	*newp;
@@ -51,29 +62,25 @@ void	*get_next_bloc(void *chunk, size_t size)
 		TOBH(newp) = (struct binaryheap){ size, TOBH(newp).mult, 0, chunk };
 		return (newp + sizeof(struct binaryheap));
 	}
-	// SPRINTF("E @ %p, parent: %p, parentsize %p, distanceformend: %lx\n", HALFBH(newp), TOBH(newp).parent, TOBH(newp).parent + CHUNK_SIZE, TOBH(newp).parent + CHUNK_SIZE - newp);
-	TOBH(HALFBH(newp)) = (struct binaryheap){ size, TOBH(newp).mult / 2, 0, chunk };
-	TOBH(newp) = SHRKBH(newp);
-	return (newp + TOBH(newp).mult) + sizeof(struct binaryheap);
-}
-
-void debug_oldp(void *oldp, size_t size) {
-	size_t i = 0;
-
-	while ( i < size ) {
-		SPRINTF("%x", ((char*)oldp)[i]);
-		i += 1;
+	else if (mark == 2) {
+		// SPRINTF("E @ %p, parent: %p, parentsize %p, distanceformend: %lx\n", HALFBH(newp), TOBH(newp).parent, TOBH(newp).parent + CHUNK_SIZE, TOBH(newp).parent + CHUNK_SIZE - newp);
+		TOBH(HALFBH(newp)) = (struct binaryheap){ size, TOBH(newp).mult / 2, 0, chunk };
+		TOBH(newp) = SHRKBH(newp);
+		// debug_p(chunk, 32);
+		SPRINTF("%p, %d, %lu = %p\n", newp, TOBH(newp).mult, sizeof(struct binaryheap), (newp + TOBH(newp).mult) + sizeof(struct binaryheap));
+		return (newp + TOBH(newp).mult) + sizeof(struct binaryheap);
 	}
-	SPRINTF("\n");
+	return (NULL);
 }
 
 void	*malloc(size_t size)
 {
-	// SPRINTF("%zu\n", size);
-	// show_alloc_mem();
+	SPRINTF("%zu\n", size);
+	show_alloc_mem();
 
-	if (size >= (size_t)(getpagesize() - 16)) {
+	if (size >= (size_t)(CHUNK_SIZE)) {
 		void *p = MMAP(size + sizeof(struct binaryheap));
+		SPRINTF("%zu @ %p\n", size, p);
 		TOBH(p) = (struct binaryheap){ size, size, 0, 0 };
 		return (p + sizeof(struct binaryheap));
 	}
@@ -81,27 +88,34 @@ void	*malloc(size_t size)
 	{
 		if (g_oldp == 0)
 		{
-			g_oldp = MMAP(getpagesize() * 8);
+			g_oldp = MMAP(getpagesize() * 4);
 			// ft_bzero(g_oldp, getpagesize() * 8);
 			INDEX(0) = MMAP(CHUNK_SIZE);
 			// SPRINTF("%p\n", INDEX(0));
 			// debug_oldp(g_oldp, getpagesize());
 
 			TOBH(INDEX(0)) = (struct binaryheap){ size, (CHUNK_SIZE), 0, INDEX(0) };
+			SPRINTF("A %zu @ %p in %p + %d\n", size, INDEX(0), g_oldp, 0);
+			show_alloc_mem();
+			// debug_p(INDEX(0), 32);
+			SPRINTF("%p\n", INDEX(0) + sizeof(struct binaryheap));
 			return (INDEX(0) + sizeof(struct binaryheap));
 		}
 		else {
 			int i = 0;
+			// debug_p(INDEX(i), 32);
 			while (INDEX(i))
 			{
 				void *p = get_next_bloc(INDEX(i), size);
 				if (p != 0) {
 					// SPRINTF("%p in %p @ %d\n", p, INDEX(i), i);
+					SPRINTF("B %zu @ %p in %p + %d\n", size, p, INDEX(i), i);
 					return (p);
 				}
 				i += 1;
 			}
 			INDEX(i) = MMAP(CHUNK_SIZE);
+			SPRINTF("C %zu @ %p in %p + %d\n", size, INDEX(i), INDEX(i), i);
 			if (INDEX(i) == MAP_FAILED) {
 				return (NULL);
 			}
@@ -120,13 +134,17 @@ void	free(void *p)
 	if (p == 0)
 		return ;
 	newp = p - sizeof(struct binaryheap);
+
+	if ((unsigned long)p & 0x7f0000000000)
+		return ;
+	SPRINTF("free @ %lx\n", (unsigned long)p & 0x7f0000000000);
 	TOBH(newp).is_free = 1;
 
 	if (TOBH(newp).size > CHUNK_SIZE) {
+		// SPRINTF("%p\n", newp);
 		munmap(newp, TOBH(newp).size);
 		return ;
 	}
-	// SPRINTF("free @ %p, %d\n", newp, TOBH(newp).size);
 	if (NEXTBH(newp) < TOBH(newp).parent + CHUNK_SIZE && IS_FREE(NEXTBH(newp)) &&
 		(TOBH(NEXTBH(newp)).mult == TOBH(newp).mult))
 	{
@@ -148,4 +166,12 @@ void	free(void *p)
 		// free(PREVBH(newp) + sizeof(struct binaryheap));
 	}
 	// show_alloc_mem();
+}
+
+void *realloc(void *ptr, size_t size)
+{
+	(void)ptr;
+	(void)size;
+	SPRINTF("test realloc\n");
+	return (NULL);
 }

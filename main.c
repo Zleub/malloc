@@ -21,6 +21,7 @@
 int global_call_cmp;
 
 void show_alloc_mem();
+
 int main(void) {
 
 	void *array[TESTSIZE + 1] = {0};
@@ -31,35 +32,23 @@ int main(void) {
 	global_call_cmp = 0;
 
 	// debug();
-
+	SPRINTF("BEGINTEST\n")
 	while (i < TESTSIZE) {
 
-		// if ((i + 1) % 6 == 0) {
-		// 	while (rand() % TESTSIZE / 200) {
-		// 		int j = rand() % i;
-		// 		free(array[j]);
-		// 		array[j] = 0;
-		// 		// j += 1;
-		// 	}
-		// }
-		// else {
-			int j = rand() % (16 * 16 * 16 * 16) + 5;
-			void *p = malloc( j );
-			cmp += j;
-			if (p == 0)
-				SPRINTF("0x0\n");
-			#ifdef DEBUG
-			SPRINTF("allocate %d @ %p\n", j, p ? p - sizeof(struct binaryheap) : p );
-			#endif
-			array[i] = p;
-			strncpy(p, (char*)&main, j);
-		// }
+		int j = rand() % (16 * 16) + 5;
+		void *p = malloc( j );
+		cmp += j;
+		if (p == 0)
+			SPRINTF("0x0\n");
 
-		#ifdef DEBUG
-			SPRINTF("----------------------------------------------\n");
-			SPRINTF("%d\n", global_call_cmp);
-			show_alloc_mem();
-		#endif
+		SPRINTF("allocate %d @ %p\n", j, p ? p - sizeof(struct binaryheap) : p );
+
+		array[i] = p;
+		strncpy(p, (char*)main, j);
+
+		// SPRINTF("----------------------------------------------\n");
+		// SPRINTF("%d\n", global_call_cmp);
+		// show_alloc_mem();
 
 		i += 1;
 		global_call_cmp += 1;

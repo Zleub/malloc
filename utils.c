@@ -18,7 +18,7 @@ void	print_from_pointer(void *p)
 
 	dt = p;
 	SPRINTF("%8d [%6d] @ %p [%s]\n", dt[0].size, dt[0].mult, p,
-		dt[0].is_free ? "FREE" : "OCCUPIED");
+		dt[0].is_free == 1 ? "FREE" : "OCCUPIED");
 }
 
 #define INDEX(x) (((void **)g_oldp)[x])
