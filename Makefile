@@ -8,15 +8,21 @@ SRC = malloc.c utils.c
 OBJ = $(subst .c,.o,$(SRC))
 
 export CC = clang
+
+ifeq ($(EXT), a)
 export CFLAGS = -Wall -Werror -Wextra -Iinc
+else
+export CFLAGS = -Wall -Werror -Wextra -Iinc -fPIC
+endif
 
 all: dep $(NAME) main.c
-	$(CC) -g3 main.c -Iinc -L. -lft_malloc -Llibft -lft -o test
-	$(CC) -g3 main.c -Iinc -Llibft -lft -o temoin
-
-debug: dep $(NAME) main.c
-	$(CC) -g3 -D DEBUG=$(DEBUG) main.c -Iinc -L. -lft_malloc -Llibft -lft -o test
-	$(CC) -g3 main.c -Iinc -Llibft -lft -o temoin
+ifeq ($(EXT), so)
+	$(CC) -fPIC -Iinc -Llibft -lft -o test main.c
+	$(CC) -fPIC -Iinc -Llibft -lft -o temoin main.c
+else
+	$(CC) -Iinc -Llibft -lft -L. -lft_malloc -o test main.c
+	$(CC) -Iinc -Llibft -lft -o temoin main.c
+endif
 
 tests:
 	make all
@@ -26,8 +32,16 @@ tests:
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(NAME): $(OBJ)
+ifeq ($(EXT), so)
+	$(CC) $(CFLAGS) -shared -o $@ $^ libft/libft.a
+else
+ifeq ($(EXT), dylib)
+	$(CC) $(CFLAGS) -dynamiclib -o $@ $^ libft/libft.a
+else
 	ar rc $@ $^ libft/libft.a
 	ranlib $@
+endif
+endif
 	rm -rf libft_malloc.$(EXT)
 	ln -s $@ libft_malloc.$(EXT)
 
