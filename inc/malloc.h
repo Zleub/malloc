@@ -13,7 +13,10 @@
 #include <sys/mman.h>
 
 #include <stdio.h>
-#define SPRINTF(args...) { char str[1024] = {0}; sprintf(str, args); ft_putstr(str); }
+
+int logfd;
+
+#define SPRINTF(args...) {char str[1024] = {0}; sprintf(str, args); ft_putstr_fd(str, logfd); }
 
 #define LARGE 4096
 
@@ -47,5 +50,7 @@ extern void	*g_oldp;
 void free(void *ptr);
 void *malloc(size_t size);
 void *realloc(void *ptr, size_t size);
+
+#undef SUPPORT_ZONES
 
 #endif
