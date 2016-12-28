@@ -18,7 +18,7 @@ int logfd;
 
 #define SPRINTF(args...) {char str[1024] = {0}; sprintf(str, args); ft_putstr_fd(str, logfd); }
 
-#define LARGE 4096
+#define LARGE 0000
 
 struct binaryheap
 {
@@ -28,7 +28,7 @@ struct binaryheap
 	void			*parent;
 };
 
-# define CHUNK_SIZE (getpagesize() * 2) // short limits
+# define CHUNK_SIZE (getpagesize() * 4) // short limits
 
 # define CASTBH(alloc...) (struct binaryheap)alloc;
 # define SIZEBH(size) (int)(size + sizeof(struct binaryheap))
@@ -43,14 +43,12 @@ struct binaryheap
 
 # define PROT_FLAGS (PROT_WRITE | PROT_READ)
 # define MAP_FLAGS (MAP_ANONYMOUS | MAP_PRIVATE)
-# define MMAP(size) mmap(0, size, PROT_FLAGS, (MAP_FLAGS), -1, 0)
+# define MMAP(size) mmap(NULL, size, PROT_FLAGS, (MAP_FLAGS), -1, 0)
 
 extern void	*g_oldp;
 
 void free(void *ptr);
 void *malloc(size_t size);
 void *realloc(void *ptr, size_t size);
-
-#undef SUPPORT_ZONES
 
 #endif

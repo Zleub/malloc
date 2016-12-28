@@ -6,9 +6,17 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/22 21:01:33 by adebray           #+#    #+#             */
-/*   Updated: 2016/12/26 23:32:30 by adebray          ###   ########.fr       */
+/*   Updated: 2016/12/28 18:02:46 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// static void __attribute__((constructor)) init(void) {
+ // callocp = (void *(*) (size_t, size_t)) dlsym (RTLD_NEXT, "calloc");
+ // mallocp = (void *(*) (size_t)) dlsym (RTLD_NEXT, "malloc");
+ // reallocp = (void *(*) (void *, size_t)) dlsym (RTLD_NEXT, "realloc");
+ // memalignp = (void *(*)(size_t, size_t)) dlsym (RTLD_NEXT, "memalign");
+ // freep = (void (*) (void *)) dlsym (RTLD_NEXT, "free");
+// };
 
 #include <malloc.h>
 
@@ -44,6 +52,7 @@ void	*get_next_bloc(void *chunk, size_t size)
 		// if (IS_FREE(newp) && SIZEBH(size) > TOBH(newp).mult)
 		// 	free(newp + sizeof(struct binaryheap));
 
+		// SPRINTF("???\n");
 		if (TOBH(newp).mult == 0) {
 			SPRINTF("B @ %p\n", newp);
 			exit(-1);
@@ -67,10 +76,14 @@ void	*get_next_bloc(void *chunk, size_t size)
 }
 
 #define INIT_SIZE (getpagesize() * 4)
-  #include <fcntl.h>
-void	*malloc(size_t size)
+#include <fcntl.h>
+
+void	*malloc(size_t size) __attribute__((weak_import))
 {
-	logfd = open("./log", O_CREAT | O_APPEND | O_WRONLY);
+	if (!logfd) {
+		ft_putstr("my malloc\n");
+		logfd = open("/Users/adebray/malloc/log", O_CREAT | O_TRUNC | O_APPEND | O_WRONLY);
+	}
 	// SPRINTF("malloc %zu\n", size);
 	// show_alloc_mem();
 
@@ -84,11 +97,15 @@ void	*malloc(size_t size)
 	{
 		if (g_oldp == 0)
 		{
-			g_oldp = MMAP(getpagesize() * 4);
-			// SPRINTF("my malloc init %p %d (%lu)\n", g_oldp, INIT_SIZE, INIT_SIZE / sizeof(void *));
-			// SPRINTF("%p -> %p\n", g_oldp, g_oldp + INIT_SIZE);
+			g_oldp = MMAP(INIT_SIZE);
+			SPRINTF("my malloc init %p %d (%lu)\n", g_oldp, INIT_SIZE, INIT_SIZE / sizeof(void *));
+			SPRINTF("%p -> %p\n", g_oldp, g_oldp + INIT_SIZE);
 
 			INDEX(0) = MMAP(CHUNK_SIZE);
+			if (INDEX(0) == MAP_FAILED) {
+				SPRINTF("test\n");
+				exit(-1);
+			}
 			TOBH(INDEX(0)) = (struct binaryheap){ size, (CHUNK_SIZE), 0, INDEX(0) };
 			return (INDEX(0) + sizeof(struct binaryheap));
 		}
@@ -101,6 +118,8 @@ void	*malloc(size_t size)
 					return (p);
 				i += 1;
 			}
+			// SPRINTF("%zu vs %zu\n", i * sizeof(void*), (unsigned long)INIT_SIZE - 16);
+			// show_alloc_mem();
 			if (i * sizeof(void*) > (unsigned long)INIT_SIZE - 16) {
 				SPRINTF("no more place in oldp\n")
 				exit(-1);

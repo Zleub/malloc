@@ -19,15 +19,14 @@ SRC = malloc.c utils.c
 OBJ = $(subst .c,.o,$(SRC))
 
 export CC = clang
-export CFLAGS = -Wall -Werror -Wextra -Iinc
+export CFLAGS = -O0 -Wall -Werror -Wextra -Iinc
 
 all: dep $(NAME) main.c
 ifeq ($(HOSTTYPE), x86_64_Darwin)
-	$(CC) -fPIC -Iinc -Llibft -lft -o dyn_test main.c
-	$(CC) -fPIC -Iinc -Llibft -lft -o dyn_temoin main.c
+	$(CC) $(CFLAGS) -fPIC -Llibft -lft -o dyn_test main.c
 
-	$(CC) -Iinc -Llibft -lft -o stt_test main.c libft_malloc.a
-	$(CC) -Iinc -Llibft -lft -o stt_temoin main.c
+	$(CC) $(CFLAGS) -Llibft -lft -o stt_test main.c libft_malloc.a
+	$(CC) $(CFLAGS) -Llibft -lft -o stt_temoin main.c
 endif
 
 tests:
