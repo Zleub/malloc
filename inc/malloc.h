@@ -12,6 +12,8 @@
 #include <sys/resource.h>
 #include <sys/mman.h>
 
+#include <pthread.h>
+
 #include <stdio.h>
 
 int logfd;
@@ -28,7 +30,7 @@ struct binaryheap
 	void			*parent;
 };
 
-# define CHUNK_SIZE (getpagesize() * 4) // short limits
+# define CHUNK_SIZE (getpagesize() * 10) // short limits
 
 # define CASTBH(alloc...) (struct binaryheap)alloc;
 # define SIZEBH(size) (int)(size + sizeof(struct binaryheap))

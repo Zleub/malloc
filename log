@@ -1,2 +1,45 @@
-my malloc init 0x104d5a000 16384 (2048)
-0x104d5a000 -> 0x104d5e000
+malloc 8
+[32mmy malloc init 0x10054e000 262144 (32768)
+[0mchunk 40960
+thread 0x7fff74d9e000
+main map 0x10054e000 -> 0x10058e000
+new map 0x10058e000 -> 0x100598000
+malloc 16
+free 0x10058e010 [0x10058e000], 8
+malloc 16
+malloc 32
+free 0x100600090 [0x100600080], 2
+free 0x100600080 [0x100600070], 208
+free 0x1006000b0 [0x1006000a0], 53568
+malloc 32
+malloc 32
+free 0x100600100 [0x1006000f0], 0
+free 0x1006003c0 [0x1006003b0], 16
+malloc 64
+malloc 64
+malloc 64
+malloc 64
+malloc 64
+malloc 32
+free 0x1006005f0 [0x1006005e0], 0
+free 0x100600120 [0x100600110], 53568
+free 0x100600610 [0x100600600], 62480
+malloc 64
+malloc 64
+malloc 64
+malloc 64
+malloc 64
+malloc 64
+malloc 64
+malloc 64
+malloc 64
+malloc 64
+malloc 64
+malloc 64
+malloc 64
+malloc 64
+malloc 64
+free 0x100600870 [0x100600860], 65535
+malloc 64
+malloc 64
+free 0x1006008d0 [0x1006008c0], 10136

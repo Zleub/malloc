@@ -6,7 +6,7 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/22 22:49:34 by adebray           #+#    #+#             */
-/*   Updated: 2016/12/23 22:35:07 by adebray          ###   ########.fr       */
+/*   Updated: 2016/12/29 22:00:28 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	show_alloc_mem(void)
 		{
 			print_from_pointer(INDEX(j) + i);
 			i += TOBH((INDEX(j) + i)).mult;
+			if (TOBH((INDEX(j) + i)).mult)
+				exit(-1);
 		}
 		j += 1;
 	}

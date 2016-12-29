@@ -1,12 +1,14 @@
-cd tests.d
-
-for varname in *.c
-	clang -O0 -D FT_MALLOC $varname -I../inc -L.. -lft_malloc -L../libft -lft -o $varname.nonito
-	clang -O0 $varname -I../inc -L../libft -lft -o $varname.system
-
-	echo $varname
-	echo "nonito --------"
-	time -l ./$varname.nonito
-	echo "system --------"
-	time -l ./$varname.system
+function timed
+  echo "--------------------"
+  echo "    "$argv[1]
+  time -l $argv[1]
 end
+
+timed ./dyn_test
+
+set -x DYLD_LIBRARY_PATH (pwd)
+set -x DYLD_INSERT_LIBRARIES libft_malloc.dylib
+set -x DYLD_FORCE_FLAT_NAMESPACE 1
+
+./dyn_test
+timed ./dyn_test

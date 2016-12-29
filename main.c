@@ -74,5 +74,5 @@ int main(void) {
 		i += 1;
 		global_call_cmp += 1;
 	}
-	SPRINTF("ENDTEST %p %d\n", array[i], cmp);
+	SPRINTF("ENDTEST\n");
 }

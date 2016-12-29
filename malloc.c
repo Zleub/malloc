@@ -6,7 +6,7 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/22 21:01:33 by adebray           #+#    #+#             */
-/*   Updated: 2016/12/28 18:02:46 by adebray          ###   ########.fr       */
+/*   Updated: 2016/12/29 23:35:01 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	*get_next_bloc(void *chunk, size_t size)
 		// SPRINTF("???\n");
 		if (TOBH(newp).mult == 0) {
 			SPRINTF("B @ %p\n", newp);
+			show_alloc_mem();
 			exit(-1);
 		}
 		newp = newp + TOBH(newp).mult;
@@ -70,42 +71,119 @@ void	*get_next_bloc(void *chunk, size_t size)
 	else if (mark == 2) {
 		TOBH(HALFBH(newp)) = (struct binaryheap){ size, TOBH(newp).mult / 2, 0, chunk };
 		TOBH(newp) = SHRKBH(newp);
+		if (TOBH(newp).mult == 0) {
+			SPRINTF("'!'");
+			exit(-1);
+		}
 		return (newp + TOBH(newp).mult) + sizeof(struct binaryheap);
 	}
 	return (NULL);
 }
 
-#define INIT_SIZE (getpagesize() * 4)
+#define INIT_SIZE (getpagesize() * 64)
 #include <fcntl.h>
+
+int sizes[] = {
+	4096,
+	8192,
+	12288,
+	16384,
+	20480,
+	24576,
+	28672,
+	32768,
+	36864,
+	40960,
+	45056,
+	49152,
+	53248,
+	57344,
+	61440,
+	65536,
+	69632,
+	73728,
+	77824,
+	81920,
+	86016,
+	90112,
+	94208,
+	98304,
+	102400,
+	106496,
+	110592,
+	114688,
+	118784,
+	122880,
+	126976,
+	131072,
+	135168,
+	139264,
+	143360,
+	147456,
+	151552,
+	155648,
+	159744,
+	163840,
+	167936,
+	172032,
+	176128,
+	180224,
+	184320,
+	188416,
+	192512,
+	196608,
+	200704,
+	0
+};
+
+extern char **argv;
 
 void	*malloc(size_t size) __attribute__((weak_import))
 {
 	if (!logfd) {
-		ft_putstr("my malloc\n");
+		// ft_putstr("my malloc\n");
 		logfd = open("/Users/adebray/malloc/log", O_CREAT | O_TRUNC | O_APPEND | O_WRONLY);
 	}
-	// SPRINTF("malloc %zu\n", size);
+	SPRINTF("malloc %zu\n", size);
 	// show_alloc_mem();
 
+	if (!size)
+		return (NULL);
+
 	if (size >= (size_t)(CHUNK_SIZE)) {
-		void *p = MMAP(size + sizeof(struct binaryheap));
-		// SPRINTF("%zu @ %p\n", size, p);
+		int *ptr_size = sizes;
+		while (*ptr_size) {
+			if ( (size_t)*(ptr_size + 1) > size) {
+				size = *ptr_size;
+				break ;
+			}
+			ptr_size += 1;
+		}
+
+		void *p = MMAP(size + sizeof(struct binaryheap) + 16);
+		SPRINTF("%zu @ %p\n", size, p);
 		TOBH(p) = (struct binaryheap){ size, size, 0, 0 };
+		SPRINTF("%p\n", p);
 		return (p + sizeof(struct binaryheap));
 	}
 	else
 	{
+		// show_alloc_mem();
 		if (g_oldp == 0)
 		{
 			g_oldp = MMAP(INIT_SIZE);
-			SPRINTF("my malloc init %p %d (%lu)\n", g_oldp, INIT_SIZE, INIT_SIZE / sizeof(void *));
-			SPRINTF("%p -> %p\n", g_oldp, g_oldp + INIT_SIZE);
+			SPRINTF("\e[32mmy malloc init %p %d (%lu)\n\033[0m", g_oldp, INIT_SIZE, INIT_SIZE / sizeof(void *));
+			SPRINTF("\e[32m%s\n\033[0m", g_oldp, INIT_SIZE, INIT_SIZE / sizeof(void *));
+			SPRINTF("chunk %d\n", (unsigned short)CHUNK_SIZE);
+			SPRINTF("thread %p\n", pthread_self());
+			SPRINTF("main map %p -> %p\n", g_oldp, g_oldp + INIT_SIZE);
 
 			INDEX(0) = MMAP(CHUNK_SIZE);
 			if (INDEX(0) == MAP_FAILED) {
 				SPRINTF("test\n");
 				exit(-1);
 			}
+			SPRINTF("new map %p -> %p\n", INDEX(0), INDEX(0) + CHUNK_SIZE);
 			TOBH(INDEX(0)) = (struct binaryheap){ size, (CHUNK_SIZE), 0, INDEX(0) };
 			return (INDEX(0) + sizeof(struct binaryheap));
 		}
@@ -127,12 +205,15 @@ void	*malloc(size_t size) __attribute__((weak_import))
 			// SPRINTF("%lu vs %d\n", i * sizeof(void*), INIT_SIZE - 16);
 			INDEX(i) = MMAP(CHUNK_SIZE);
 			if (INDEX(i) == MAP_FAILED) {
+				SPRINTF("Map Failed\n");
 				return (NULL);
 			}
+			SPRINTF("new map %p -> %p\n", INDEX(i), INDEX(i) + CHUNK_SIZE);
 			TOBH(INDEX(i)) = (struct binaryheap){ size, (CHUNK_SIZE), 0, INDEX(i) };
 			return (INDEX(i) + sizeof(struct binaryheap));
 		}
 	}
+	SPRINTF("???\n");
 	return (NULL);
 }
 
@@ -141,6 +222,8 @@ void *calloc(size_t count, size_t size)
 	(void)count;
 	// SPRINTF("calloc %zu\n", size);
 	void *p = malloc(count * size);
+	if (!p)
+		return (p);
 	bzero(p, size);
 	return (p);
 
@@ -154,8 +237,11 @@ void *realloc(void *ptr, size_t size)
 
 	SPRINTF("test realloc %p\n", ptr);
 	void *p = malloc(size);
-	strncpy(p, ptr, TOBH((ptr - sizeof(struct binaryheap))).size );
+	if (!p)
+		return (p);
 	// bzero(p, size);
+	strncpy(p, ptr, TOBH((ptr - sizeof(struct binaryheap))).size );
+	free(ptr);
 	return (p);
 }
 // void *reallocf(void *ptr, size_t size)
@@ -234,15 +320,15 @@ void	free(void *p)
 {
 	void		*newp;
 
-	if (p == 0 || (unsigned long)p & -1)
+	if (p == 0 || (long)p & 0x700000000000)
 		return ;
+
 	newp = p - sizeof(struct binaryheap);
+	SPRINTF("free %p [%p], %d\n", p, newp, TOBH((newp)).size);
 
-
-	SPRINTF("free @ %x %p [%p], %d\n", (unsigned int)p, p, newp, TOBH(newp).size);
 	TOBH(newp).is_free = 1;
 
-	if (TOBH(newp).size > CHUNK_SIZE) {
+	if (TOBH(newp).size >= CHUNK_SIZE) {
 		munmap(newp, TOBH(newp).size);
 		return ;
 	}
