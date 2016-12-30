@@ -6,7 +6,7 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/22 21:01:33 by adebray           #+#    #+#             */
-/*   Updated: 2016/12/29 23:35:01 by adebray          ###   ########.fr       */
+/*   Updated: 2016/12/30 18:35:20 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,12 +136,21 @@ int sizes[] = {
 	0
 };
 
-extern char **argv;
+#include <signal.h>
+extern char **environ;
+
+void	sighandler(int sig) {
+	(void)sig;
+	SPRINTF("SIGSEGV\n")
+	show_alloc_mem();
+	exit(-1);
+}
 
 void	*malloc(size_t size) __attribute__((weak_import))
 {
 	if (!logfd) {
 		// ft_putstr("my malloc\n");
+		signal(SIGSEGV, sighandler);
 		logfd = open("/Users/adebray/malloc/log", O_CREAT | O_TRUNC | O_APPEND | O_WRONLY);
 	}
 	SPRINTF("malloc %zu\n", size);
@@ -173,7 +182,7 @@ void	*malloc(size_t size) __attribute__((weak_import))
 		{
 			g_oldp = MMAP(INIT_SIZE);
 			SPRINTF("\e[32mmy malloc init %p %d (%lu)\n\033[0m", g_oldp, INIT_SIZE, INIT_SIZE / sizeof(void *));
-			SPRINTF("\e[32m%s\n\033[0m", g_oldp, INIT_SIZE, INIT_SIZE / sizeof(void *));
+			SPRINTF("~~~ %s ~~~\n", environ[-2]);
 			SPRINTF("chunk %d\n", (unsigned short)CHUNK_SIZE);
 			SPRINTF("thread %p\n", pthread_self());
 			SPRINTF("main map %p -> %p\n", g_oldp, g_oldp + INIT_SIZE);
@@ -192,8 +201,13 @@ void	*malloc(size_t size) __attribute__((weak_import))
 			while (INDEX(i))
 			{
 				void *p = get_next_bloc(INDEX(i), size);
-				if (p != 0)
-					return (p);
+				if (p != 0) {
+					if ((long)p % 16 != 0) {
+						show_alloc_mem();
+					}
+					SPRINTF(" -> %p %d\n", p, (int)p % 16);
+					return (p + sizeof(struct binaryheap));
+				}
 				i += 1;
 			}
 			// SPRINTF("%zu vs %zu\n", i * sizeof(void*), (unsigned long)INIT_SIZE - 16);
@@ -320,8 +334,20 @@ void	free(void *p)
 {
 	void		*newp;
 
-	if (p == 0 || (long)p & 0x700000000000)
+	if (p == 0 || (long)p & 0x700000000000) {
+		SPRINTF("not free @ %p\n", p);
 		return ;
+	}
+
+	int i = 0;
+	while (INDEX(i))
+	{
+		if (!( INDEX(i) < p && p < INDEX(i) + CHUNK_SIZE )) {
+			SPRINTF("not free %p %p %p\n", INDEX(i), p, INDEX(i) + CHUNK_SIZE);
+			return ;
+		}
+		i += 1;
+	}
 
 	newp = p - sizeof(struct binaryheap);
 	SPRINTF("free %p [%p], %d\n", p, newp, TOBH((newp)).size);

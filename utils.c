@@ -6,7 +6,7 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/22 22:49:34 by adebray           #+#    #+#             */
-/*   Updated: 2016/12/29 22:00:28 by adebray          ###   ########.fr       */
+/*   Updated: 2016/12/30 18:25:02 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ void	show_alloc_mem(void)
 		while (i < CHUNK_SIZE)
 		{
 			print_from_pointer(INDEX(j) + i);
-			i += TOBH((INDEX(j) + i)).mult;
-			if (TOBH((INDEX(j) + i)).mult)
+			if (TOBH((INDEX(j) + i)).mult == 0) {
+				SPRINTF("trouble @ %p\n", INDEX(j) + i);
 				exit(-1);
+			}
+			i += TOBH((INDEX(j) + i)).mult;
 		}
 		j += 1;
 	}

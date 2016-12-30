@@ -30,7 +30,7 @@ struct binaryheap
 	void			*parent;
 };
 
-# define CHUNK_SIZE (getpagesize() * 10) // short limits
+# define CHUNK_SIZE (getpagesize() * 5) // short limits
 
 # define CASTBH(alloc...) (struct binaryheap)alloc;
 # define SIZEBH(size) (int)(size + sizeof(struct binaryheap))

@@ -1,45 +1,427 @@
 malloc 8
-[32mmy malloc init 0x10054e000 262144 (32768)
-[0mchunk 40960
-thread 0x7fff74d9e000
-main map 0x10054e000 -> 0x10058e000
-new map 0x10058e000 -> 0x100598000
+[32mmy malloc init 0x10b772000 262144 (32768)
+[0m~~~ env ~~~
+chunk 20480
+thread 0x7fff76fd4000
+main map 0x10b772000 -> 0x10b7b2000
+new map 0x10b7b2000 -> 0x10b7b7000
 malloc 16
-free 0x10058e010 [0x10058e000], 8
+ -> 0x10b7b4810 0
+free 0x10b7b2010 [0x10b7b2000], 8
 malloc 16
+ -> 0x10b7b2010 0
 malloc 32
-free 0x100600090 [0x100600080], 2
-free 0x100600080 [0x100600070], 208
-free 0x1006000b0 [0x1006000a0], 53568
+ -> 0x10b7b3410 0
+not free @ 0x7fe2d2c00090
+not free @ 0x7fe2d2c00080
+not free @ 0x7fe2d2c000b0
 malloc 32
+ -> 0x10b7b2a10 0
 malloc 32
-free 0x100600100 [0x1006000f0], 0
-free 0x1006003c0 [0x1006003b0], 16
+ -> 0x10b7b2510 0
+not free @ 0x7fe2d2c003a0
 malloc 64
+ -> 0x10b7b2290 0
 malloc 64
+ -> 0x10b7b2150 0
 malloc 64
+ -> 0x10b7b20b0 0
 malloc 64
+ -> 0x10b7b21f0 0
 malloc 64
+ -> 0x10b7b23d0 0
 malloc 32
-free 0x1006005f0 [0x1006005e0], 0
-free 0x100600120 [0x100600110], 53568
-free 0x100600610 [0x100600600], 62480
+ -> 0x10b7b2060 0
+not free @ 0x7fe2d2c005d0
+not free @ 0x7fe2d2c00100
+not free @ 0x7fe2d2c005f0
 malloc 64
+ -> 0x10b7b2330 0
 malloc 64
+ -> 0x10b7b2470 0
 malloc 64
+ -> 0x10b7b2790 0
 malloc 64
+ -> 0x10b7b2650 0
 malloc 64
+ -> 0x10b7b25b0 0
 malloc 64
+ -> 0x10b7b26f0 0
 malloc 64
+ -> 0x10b7b28d0 0
 malloc 64
+ -> 0x10b7b2830 0
 malloc 64
+ -> 0x10b7b2970 0
 malloc 64
+ -> 0x10b7b2f10 0
 malloc 64
+ -> 0x10b7b2c90 0
+not free @ 0x7fe2d2c00850
 malloc 64
+ -> 0x10b7b2b50 0
 malloc 64
+ -> 0x10b7b2ab0 0
 malloc 64
+ -> 0x10b7b2bf0 0
 malloc 64
-free 0x100600870 [0x100600860], 65535
+ -> 0x10b7b2dd0 0
 malloc 64
+ -> 0x10b7b2d30 0
 malloc 64
-free 0x1006008d0 [0x1006008c0], 10136
+ -> 0x10b7b2e70 0
+malloc 64
+ -> 0x10b7b3190 0
+malloc 64
+ -> 0x10b7b3050 0
+malloc 64
+ -> 0x10b7b2fb0 0
+malloc 64
+ -> 0x10b7b30f0 0
+not free @ 0x7fe2d2c00890
+malloc 64
+ -> 0x10b7b32d0 0
+malloc 64
+ -> 0x10b7b3230 0
+malloc 64
+ -> 0x10b7b3370 0
+malloc 64
+ -> 0x10b7b3e10 0
+not free @ 0x7fe2d2c00870
+malloc 64
+ -> 0x10b7b3910 0
+malloc 64
+ -> 0x10b7b3690 0
+not free @ 0x7fe2d2c008f0
+not free @ 0x7fe2d2c00930
+not free @ 0x7fe2d2c009a0
+not free @ 0x7fe2d2c00970
+not free @ 0x7fe2d2c008d0
+not free @ 0x7fe2d2c00290
+not free @ 0x7fe2d2c009d0
+not free @ 0x7fe2d2c00910
+not free @ 0x7fe2d2c00e90
+not free @ 0x7fe2d2c00ef0
+not free @ 0x7fe2d2c00f30
+not free @ 0x7fe2d2c00c60
+not free @ 0x7fe2d2c00950
+not free @ 0x7fe2d2c008b0
+not free @ 0x7fe2d2c00180
+not free @ 0x7fe2d2c00c80
+malloc 64
+ -> 0x10b7b3550 0
+malloc 64
+ -> 0x10b7b34b0 0
+malloc 64
+ -> 0x10b7b35f0 0
+malloc 64
+ -> 0x10b7b37d0 0
+malloc 64
+ -> 0x10b7b3730 0
+malloc 64
+ -> 0x10b7b3870 0
+malloc 64
+ -> 0x10b7b3b90 0
+malloc 64
+ -> 0x10b7b3a50 0
+malloc 64
+ -> 0x10b7b39b0 0
+malloc 64
+ -> 0x10b7b3af0 0
+malloc 64
+ -> 0x10b7b3cd0 0
+malloc 64
+ -> 0x10b7b3c30 0
+not free @ 0x7fe2d2c00c20
+malloc 64
+ -> 0x10b7b3d70 0
+malloc 64
+ -> 0x10b7b4310 0
+malloc 64
+ -> 0x10b7b4090 0
+malloc 64
+ -> 0x10b7b3f50 0
+not free @ 0x7fe2d2c00fd0
+malloc 64
+ -> 0x10b7b3eb0 0
+malloc 64
+ -> 0x10b7b3ff0 0
+malloc 64
+ -> 0x10b7b41d0 0
+malloc 64
+ -> 0x10b7b4130 0
+not free @ 0x7fe2d2c00be0
+malloc 64
+ -> 0x10b7b4270 0
+malloc 64
+ -> 0x10b7b4590 0
+malloc 64
+ -> 0x10b7b4450 0
+malloc 64
+ -> 0x10b7b43b0 0
+not free @ 0x7fe2d2c00f70
+malloc 64
+ -> 0x10b7b44f0 0
+malloc 64
+ -> 0x10b7b46d0 0
+malloc 64
+ -> 0x10b7b4630 0
+malloc 64
+ -> 0x10b7b4770 0
+not free @ 0x7fe2d2c00c00
+malloc 64
+ -> 0x10b7b5c10 0
+malloc 64
+ -> 0x10b7b5210 0
+malloc 64
+ -> 0x10b7b4d10 0
+malloc 64
+ -> 0x10b7b4a90 0
+not free @ 0x7fe2d2c00c40
+not free @ 0x7fe2d2d004d0
+not free @ 0x7fe2d2d00060
+not free @ 0x7fe2d2c00fb0
+not free @ 0x7fe2d2d00020
+not free @ 0x7fe2d2d000a0
+not free @ 0x7fe2d2c01030
+not free @ 0x7fe2d2c01010
+not free @ 0x7fe2d2d00000
+not free @ 0x7fe2d2c009f0
+not free @ 0x7fe2d2d000c0
+not free @ 0x7fe2d2d00a00
+not free @ 0x7fe2d2d00aa0
+not free @ 0x7fe2d2d00ac0
+not free @ 0x7fe2d2c00f50
+not free @ 0x7fe2d2c00f90
+not free @ 0x7fe2d2d00040
+not free @ 0x7fe2d2c00f10
+not free @ 0x7fe2d2d00080
+not free @ 0x7fe2d2c00ff0
+not free @ 0x7fe2d2c00eb0
+not free @ 0x7fe2d2c00ed0
+not free @ 0x7fe2d2d00590
+not free @ 0x7fe2d2c00ca0
+not free @ 0x7fe2d2d005b0
+malloc 64
+ -> 0x10b7b4950 0
+malloc 64
+ -> 0x10b7b48b0 0
+not free @ 0x7fe2d2d00a40
+malloc 64
+ -> 0x10b7b49f0 0
+malloc 64
+ -> 0x10b7b4bd0 0
+malloc 64
+ -> 0x10b7b4b30 0
+malloc 64
+ -> 0x10b7b4c70 0
+not free @ 0x7fe2d2d00510
+malloc 64
+ -> 0x10b7b4f90 0
+malloc 64
+ -> 0x10b7b4e50 0
+not free @ 0x7fe2d2d00550
+not free @ 0x7fe2d2d00a20
+malloc 64
+ -> 0x10b7b4db0 0
+malloc 64
+ -> 0x10b7b4ef0 0
+not free @ 0x7fe2d2d00a80
+malloc 64
+ -> 0x10b7b50d0 0
+malloc 64
+ -> 0x10b7b5030 0
+malloc 64
+ -> 0x10b7b5170 0
+malloc 64
+ -> 0x10b7b5710 0
+not free @ 0x7fe2d2d00b40
+malloc 64
+ -> 0x10b7b5490 0
+malloc 64
+ -> 0x10b7b5350 0
+not free @ 0x7fe2d2d00b90
+not free @ 0x7fe2d2d00bb0
+malloc 64
+ -> 0x10b7b52b0 0
+malloc 64
+ -> 0x10b7b53f0 0
+not free @ 0x7fe2d2d00bd0
+not free @ 0x7fe2d2d00c00
+malloc 64
+ -> 0x10b7b55d0 0
+malloc 64
+ -> 0x10b7b5530 0
+not free @ 0x7fe2d2d00570
+malloc 64
+ -> 0x10b7b5670 0
+malloc 64
+ -> 0x10b7b5990 0
+not free @ 0x7fe2d2d00530
+not free @ 0x7fe2d2d009e0
+malloc 64
+ -> 0x10b7b5850 0
+malloc 64
+ -> 0x10b7b57b0 0
+not free @ 0x7fe2d2d00ca0
+malloc 64
+ -> 0x10b7b58f0 0
+malloc 64
+ -> 0x10b7b5ad0 0
+not free @ 0x7fe2d2d00c20
+malloc 64
+ -> 0x10b7b5a30 0
+malloc 64
+ -> 0x10b7b5b70 0
+malloc 64
+ -> 0x10b7b6610 0
+malloc 64
+ -> 0x10b7b6110 0
+malloc 64
+ -> 0x10b7b5e90 0
+malloc 64
+ -> 0x10b7b5d50 0
+malloc 64
+ -> 0x10b7b5cb0 0
+malloc 64
+ -> 0x10b7b5df0 0
+malloc 8
+INDEX: 0
+      16 [    40] @ 0x10b7b2000 [OCCUPIED]
+       8 [    40] @ 0x10b7b2028 [OCCUPIED]
+      32 [    80] @ 0x10b7b2050 [OCCUPIED]
+      64 [   160] @ 0x10b7b20a0 [OCCUPIED]
+      64 [   160] @ 0x10b7b2140 [OCCUPIED]
+      64 [   160] @ 0x10b7b21e0 [OCCUPIED]
+      64 [   160] @ 0x10b7b2280 [OCCUPIED]
+      64 [   160] @ 0x10b7b2320 [OCCUPIED]
+      64 [   160] @ 0x10b7b23c0 [OCCUPIED]
+      64 [   160] @ 0x10b7b2460 [OCCUPIED]
+      32 [   160] @ 0x10b7b2500 [OCCUPIED]
+      64 [   160] @ 0x10b7b25a0 [OCCUPIED]
+      64 [   160] @ 0x10b7b2640 [OCCUPIED]
+      64 [   160] @ 0x10b7b26e0 [OCCUPIED]
+      64 [   160] @ 0x10b7b2780 [OCCUPIED]
+      64 [   160] @ 0x10b7b2820 [OCCUPIED]
+      64 [   160] @ 0x10b7b28c0 [OCCUPIED]
+      64 [   160] @ 0x10b7b2960 [OCCUPIED]
+      32 [   160] @ 0x10b7b2a00 [OCCUPIED]
+      64 [   160] @ 0x10b7b2aa0 [OCCUPIED]
+      64 [   160] @ 0x10b7b2b40 [OCCUPIED]
+      64 [   160] @ 0x10b7b2be0 [OCCUPIED]
+      64 [   160] @ 0x10b7b2c80 [OCCUPIED]
+      64 [   160] @ 0x10b7b2d20 [OCCUPIED]
+      64 [   160] @ 0x10b7b2dc0 [OCCUPIED]
+      64 [   160] @ 0x10b7b2e60 [OCCUPIED]
+      64 [   160] @ 0x10b7b2f00 [OCCUPIED]
+      64 [   160] @ 0x10b7b2fa0 [OCCUPIED]
+      64 [   160] @ 0x10b7b3040 [OCCUPIED]
+      64 [   160] @ 0x10b7b30e0 [OCCUPIED]
+      64 [   160] @ 0x10b7b3180 [OCCUPIED]
+      64 [   160] @ 0x10b7b3220 [OCCUPIED]
+      64 [   160] @ 0x10b7b32c0 [OCCUPIED]
+      64 [   160] @ 0x10b7b3360 [OCCUPIED]
+      32 [   160] @ 0x10b7b3400 [OCCUPIED]
+      64 [   160] @ 0x10b7b34a0 [OCCUPIED]
+      64 [   160] @ 0x10b7b3540 [OCCUPIED]
+      64 [   160] @ 0x10b7b35e0 [OCCUPIED]
+      64 [   160] @ 0x10b7b3680 [OCCUPIED]
+      64 [   160] @ 0x10b7b3720 [OCCUPIED]
+      64 [   160] @ 0x10b7b37c0 [OCCUPIED]
+      64 [   160] @ 0x10b7b3860 [OCCUPIED]
+      64 [   160] @ 0x10b7b3900 [OCCUPIED]
+      64 [   160] @ 0x10b7b39a0 [OCCUPIED]
+      64 [   160] @ 0x10b7b3a40 [OCCUPIED]
+      64 [   160] @ 0x10b7b3ae0 [OCCUPIED]
+      64 [   160] @ 0x10b7b3b80 [OCCUPIED]
+      64 [   160] @ 0x10b7b3c20 [OCCUPIED]
+      64 [   160] @ 0x10b7b3cc0 [OCCUPIED]
+      64 [   160] @ 0x10b7b3d60 [OCCUPIED]
+      64 [   160] @ 0x10b7b3e00 [OCCUPIED]
+      64 [   160] @ 0x10b7b3ea0 [OCCUPIED]
+      64 [   160] @ 0x10b7b3f40 [OCCUPIED]
+      64 [   160] @ 0x10b7b3fe0 [OCCUPIED]
+      64 [   160] @ 0x10b7b4080 [OCCUPIED]
+      64 [   160] @ 0x10b7b4120 [OCCUPIED]
+      64 [   160] @ 0x10b7b41c0 [OCCUPIED]
+      64 [   160] @ 0x10b7b4260 [OCCUPIED]
+      64 [   160] @ 0x10b7b4300 [OCCUPIED]
+      64 [   160] @ 0x10b7b43a0 [OCCUPIED]
+      64 [   160] @ 0x10b7b4440 [OCCUPIED]
+      64 [   160] @ 0x10b7b44e0 [OCCUPIED]
+      64 [   160] @ 0x10b7b4580 [OCCUPIED]
+      64 [   160] @ 0x10b7b4620 [OCCUPIED]
+      64 [   160] @ 0x10b7b46c0 [OCCUPIED]
+      64 [   160] @ 0x10b7b4760 [OCCUPIED]
+      16 [   160] @ 0x10b7b4800 [OCCUPIED]
+      64 [   160] @ 0x10b7b48a0 [OCCUPIED]
+      64 [   160] @ 0x10b7b4940 [OCCUPIED]
+      64 [   160] @ 0x10b7b49e0 [OCCUPIED]
+      64 [   160] @ 0x10b7b4a80 [OCCUPIED]
+      64 [   160] @ 0x10b7b4b20 [OCCUPIED]
+      64 [   160] @ 0x10b7b4bc0 [OCCUPIED]
+      64 [   160] @ 0x10b7b4c60 [OCCUPIED]
+      64 [   160] @ 0x10b7b4d00 [OCCUPIED]
+      64 [   160] @ 0x10b7b4da0 [OCCUPIED]
+      64 [   160] @ 0x10b7b4e40 [OCCUPIED]
+      64 [   160] @ 0x10b7b4ee0 [OCCUPIED]
+      64 [   160] @ 0x10b7b4f80 [OCCUPIED]
+      64 [   160] @ 0x10b7b5020 [OCCUPIED]
+      64 [   160] @ 0x10b7b50c0 [OCCUPIED]
+      64 [   160] @ 0x10b7b5160 [OCCUPIED]
+      64 [   160] @ 0x10b7b5200 [OCCUPIED]
+      64 [   160] @ 0x10b7b52a0 [OCCUPIED]
+      64 [   160] @ 0x10b7b5340 [OCCUPIED]
+      64 [   160] @ 0x10b7b53e0 [OCCUPIED]
+      64 [   160] @ 0x10b7b5480 [OCCUPIED]
+      64 [   160] @ 0x10b7b5520 [OCCUPIED]
+      64 [   160] @ 0x10b7b55c0 [OCCUPIED]
+      64 [   160] @ 0x10b7b5660 [OCCUPIED]
+      64 [   160] @ 0x10b7b5700 [OCCUPIED]
+      64 [   160] @ 0x10b7b57a0 [OCCUPIED]
+      64 [   160] @ 0x10b7b5840 [OCCUPIED]
+      64 [   160] @ 0x10b7b58e0 [OCCUPIED]
+      64 [   160] @ 0x10b7b5980 [OCCUPIED]
+      64 [   160] @ 0x10b7b5a20 [OCCUPIED]
+      64 [   160] @ 0x10b7b5ac0 [OCCUPIED]
+      64 [   160] @ 0x10b7b5b60 [OCCUPIED]
+      64 [   160] @ 0x10b7b5c00 [OCCUPIED]
+      64 [   160] @ 0x10b7b5ca0 [OCCUPIED]
+      64 [   160] @ 0x10b7b5d40 [OCCUPIED]
+      64 [   160] @ 0x10b7b5de0 [OCCUPIED]
+      64 [   640] @ 0x10b7b5e80 [OCCUPIED]
+      64 [  1280] @ 0x10b7b6100 [OCCUPIED]
+      64 [  2560] @ 0x10b7b6600 [OCCUPIED]
+ -> 0x10b7b2038 8
+malloc 128
+ -> 0x10b7b5fd0 0
+malloc 27
+ -> 0x10b7b2560 0
+malloc 56
+ -> 0x10b7b2a60 0
+malloc 64
+B @ 0x10b7b2aa0
+INDEX: 0
+      16 [    40] @ 0x10b7b2000 [OCCUPIED]
+       8 [    40] @ 0x10b7b2028 [OCCUPIED]
+      32 [    80] @ 0x10b7b2050 [OCCUPIED]
+      64 [   160] @ 0x10b7b20a0 [OCCUPIED]
+      64 [   160] @ 0x10b7b2140 [OCCUPIED]
+      64 [   160] @ 0x10b7b21e0 [OCCUPIED]
+      64 [   160] @ 0x10b7b2280 [OCCUPIED]
+      64 [   160] @ 0x10b7b2320 [OCCUPIED]
+      64 [   160] @ 0x10b7b23c0 [OCCUPIED]
+      64 [   160] @ 0x10b7b2460 [OCCUPIED]
+      32 [    80] @ 0x10b7b2500 [OCCUPIED]
+      27 [    80] @ 0x10b7b2550 [OCCUPIED]
+      64 [   160] @ 0x10b7b25a0 [OCCUPIED]
+      64 [   160] @ 0x10b7b2640 [OCCUPIED]
+      64 [   160] @ 0x10b7b26e0 [OCCUPIED]
+      64 [   160] @ 0x10b7b2780 [OCCUPIED]
+      64 [   160] @ 0x10b7b2820 [OCCUPIED]
+      64 [   160] @ 0x10b7b28c0 [OCCUPIED]
+      64 [   160] @ 0x10b7b2960 [OCCUPIED]
+      32 [    80] @ 0x10b7b2a00 [OCCUPIED]
+      56 [    80] @ 0x10b7b2a50 [OCCUPIED]
+       0 [     0] @ 0x10b7b2aa0 [OCCUPIED]
+trouble @ 0x10b7b2aa0
