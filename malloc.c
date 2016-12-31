@@ -6,7 +6,7 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/22 21:01:33 by adebray           #+#    #+#             */
-/*   Updated: 2016/12/30 18:35:20 by adebray          ###   ########.fr       */
+/*   Updated: 2016/12/31 18:23:49 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void show_alloc_mem();
 void debug_p(void *oldp, size_t size) {
 	size_t i = 0;
 
+	(void) oldp;
 	while ( i < size ) {
 		SPRINTF("%x ", ((unsigned char*)oldp)[i]);
 		i += 1;
@@ -47,7 +48,7 @@ void	*get_next_bloc(void *chunk, size_t size)
 	newp = chunk;
 	while (!((IS_FREE(newp) && SIZEBH(size) < TOBH(newp).mult && (mark = 1)) ||
 		(SIZEBH(TOBH(newp).size) < TOBH(newp).mult / 2 &&
-			SIZEBH(size) < TOBH(newp).mult / 2 && (mark = 2))))
+			SIZEBH(size) < TOBH(newp).mult / 2 && TOBH(newp).mult / 2 > 64 && (mark = 2))))
 	{
 		// if (IS_FREE(newp) && SIZEBH(size) > TOBH(newp).mult)
 		// 	free(newp + sizeof(struct binaryheap));
@@ -153,7 +154,7 @@ void	*malloc(size_t size) __attribute__((weak_import))
 		signal(SIGSEGV, sighandler);
 		logfd = open("/Users/adebray/malloc/log", O_CREAT | O_TRUNC | O_APPEND | O_WRONLY);
 	}
-	SPRINTF("malloc %zu\n", size);
+	// SPRINTF("malloc %zu\n", size);
 	// show_alloc_mem();
 
 	if (!size)
@@ -163,7 +164,8 @@ void	*malloc(size_t size) __attribute__((weak_import))
 		int *ptr_size = sizes;
 		while (*ptr_size) {
 			if ( (size_t)*(ptr_size + 1) > size) {
-				size = *ptr_size;
+				SPRINTF("padding: %zu -> %d\n", size, *ptr_size + 1);
+				size = *ptr_size + 1;
 				break ;
 			}
 			ptr_size += 1;
@@ -204,8 +206,9 @@ void	*malloc(size_t size) __attribute__((weak_import))
 				if (p != 0) {
 					if ((long)p % 16 != 0) {
 						show_alloc_mem();
+						SPRINTF(" -> %p %d\n", p, (int)p % 16);
+						exit(-1);
 					}
-					SPRINTF(" -> %p %d\n", p, (int)p % 16);
 					return (p + sizeof(struct binaryheap));
 				}
 				i += 1;
@@ -249,10 +252,13 @@ void *realloc(void *ptr, size_t size)
 	if (ptr == 0x0)
 		return malloc(size);
 
-	SPRINTF("test realloc %p\n", ptr);
+	SPRINTF("test realloc %p %zu\n", ptr, size);
 	void *p = malloc(size);
-	if (!p)
+	SPRINTF("realloc: %p\n", p);
+	if (!p) {
+		SPRINTF("REALLOC FAIL\n");
 		return (p);
+	}
 	// bzero(p, size);
 	strncpy(p, ptr, TOBH((ptr - sizeof(struct binaryheap))).size );
 	free(ptr);
@@ -333,20 +339,24 @@ void *realloc(void *ptr, size_t size)
 void	free(void *p)
 {
 	void		*newp;
+		return ;
 
 	if (p == 0 || (long)p & 0x700000000000) {
 		SPRINTF("not free @ %p\n", p);
-		return ;
 	}
 
 	int i = 0;
 	while (INDEX(i))
 	{
 		if (!( INDEX(i) < p && p < INDEX(i) + CHUNK_SIZE )) {
-			SPRINTF("not free %p %p %p\n", INDEX(i), p, INDEX(i) + CHUNK_SIZE);
-			return ;
+			i += 1;
 		}
-		i += 1;
+		else
+			break;
+	}
+	if (INDEX(i) == 0) {
+		SPRINTF("not free %p %p %p\n", INDEX(i), p, INDEX(i) + CHUNK_SIZE);
+		return ;
 	}
 
 	newp = p - sizeof(struct binaryheap);
@@ -375,4 +385,6 @@ void	free(void *p)
 		};
 		// free(PREVBH(newp) + sizeof(struct binaryheap));
 	}
+
+	// show_alloc_mem();
 }

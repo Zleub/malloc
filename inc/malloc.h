@@ -18,7 +18,8 @@
 
 int logfd;
 
-#define SPRINTF(args...) {char str[1024] = {0}; sprintf(str, args); ft_putstr_fd(str, logfd); }
+// #define SPRINTF(args...) {char str[1024] = {0}; sprintf(str, args); ft_putstr_fd(str, logfd); }
+#define SPRINTF(args...) {(void)0; }
 
 #define LARGE 0000
 
@@ -30,7 +31,7 @@ struct binaryheap
 	void			*parent;
 };
 
-# define CHUNK_SIZE (getpagesize() * 5) // short limits
+# define CHUNK_SIZE (getpagesize() * 8) // short limits
 
 # define CASTBH(alloc...) (struct binaryheap)alloc;
 # define SIZEBH(size) (int)(size + sizeof(struct binaryheap))
