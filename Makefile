@@ -15,23 +15,22 @@ NAME = ft_malloc
 STATIC_NAME = libft_malloc_$(HOSTTYPE).$(STATIC_EXT)
 DYNAMIC_NAME = libft_malloc_$(HOSTTYPE).$(DYNAMIC_EXT)
 
-SRC = malloc.c utils.c
+SRC =	src/malloc.c \
+		src/utils.c
 OBJ = $(subst .c,.o,$(SRC))
 
 export CC = clang
 export CFLAGS = -O0 -Wall -Werror -Wextra -Iinc
 
-all: dep $(NAME) main.c
+all: dep $(NAME)
+
+tests: main.c
 ifeq ($(HOSTTYPE), x86_64_Darwin)
 	$(CC) $(CFLAGS) -fPIC -Llibft -lft -o dyn_test main.c
 
 	$(CC) $(CFLAGS) -Llibft -lft -o stt_test main.c libft_malloc.a
 	$(CC) $(CFLAGS) -Llibft -lft -o stt_temoin main.c
 endif
-
-tests:
-	make all
-	fish test.fish
 
 %.o:%.c inc/malloc.h
 	$(CC) $(CFLAGS) -o $@ -c $<
