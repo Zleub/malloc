@@ -18,11 +18,12 @@
 // 	return (0);
 // }
 
-#define TESTSIZE 1000
+#define TESTSIZE 10000
 
 int global_call_cmp;
 
 void show_alloc_mem();
+const char *getprogname(void);
 
 char *str = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\
 Cras at euismod urna. Vdawestibulum porta ultrices ex, a lacinia lorem imperdiet ac.\
@@ -53,12 +54,14 @@ int main(void) {
 	// SPRINTF("BEGINTEST\n")
 	while (i < TESTSIZE) {
 
-		int j = 1024; //rand() % (16 * 16) + 5;
+		int j = rand() % (16 * 16 * 3) + 5;
 		void *p = malloc( j );
+		if (p == 0) {
+			SPRINTF("main: 0x0\n");
+			// exit(-1);
+		}
 		bzero(p, j);
 		cmp += j;
-		if (p == 0)
-			SPRINTF("0x0\n");
 
 		// SPRINTF("allocate %d @ %p\n", j, p ? p - sizeof(struct binaryheap) : p );
 
@@ -74,5 +77,7 @@ int main(void) {
 		i += 1;
 		global_call_cmp += 1;
 	}
-	SPRINTF("ENDTEST\n");
+	char str[1024] = {0};
+	sprintf(str, "~~~ %s ~~~\n", getprogname());
+	ft_putstr(str);
 }
