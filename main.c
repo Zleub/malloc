@@ -42,7 +42,7 @@ Fusce auctor vehicula mi. Donec molestie tincidunt dolor,\
 ac gravida urna auctor ac. Vestibulum sagittis, ante vel ullamcorper bibendum,\
 enim erat rhoncus urna, nec viverra ipsum sem non velit. Ut eros arcu posuere.";
 
-int main(void) {
+int main(int ac, char**argv) {
 
 	void *array[TESTSIZE + 1] = {0};
 
@@ -52,6 +52,7 @@ int main(void) {
 
 	// debug();
 	// SPRINTF("BEGINTEST\n")
+	(void)ac;
 	while (i < TESTSIZE) {
 
 		int j = rand() % (16 * 16 * 3) + 5;
@@ -78,6 +79,6 @@ int main(void) {
 		global_call_cmp += 1;
 	}
 	char str[1024] = {0};
-	sprintf(str, "~~~ %s ~~~\n", getprogname());
+	sprintf(str, "~~~ %s ~~~\n", argv[0]);
 	ft_putstr(str);
 }

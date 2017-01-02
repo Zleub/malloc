@@ -144,7 +144,7 @@ void	init(void)
 	SPRINTF("\e[32mmy malloc init %p %d (%lu)\n\033[0m", ft_malloc.global_map, INIT_SIZE, INIT_SIZE / sizeof(void *));
 	SPRINTF("~~~ %s ~~~\n", getprogname());
 	SPRINTF("main %d | chunk %d\n", INIT_SIZE, (unsigned short)CHUNK_SIZE);
-	SPRINTF("thread %p\n", pthread_self());
+	SPRINTF("thread %p\n", (void*)pthread_self());
 	SPRINTF("main map %p -> %p\n", ft_malloc.global_map, ft_malloc.global_map + INIT_SIZE);
 
 	MAP(0) = MMAP(CHUNK_SIZE);

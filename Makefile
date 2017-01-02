@@ -6,7 +6,7 @@ ifeq ($(HOSTTYPE), x86_64_Darwin)
 	STATIC_EXT = a
 	DYNAMIC_EXT = dylib
 endif
-ifeq ($(HOSTTYPE), Linux)
+ifeq ($(HOSTTYPE), x86_64_Linux)
 	STATIC_EXT = a
 	DYNAMIC_EXT = so
 endif
@@ -29,6 +29,12 @@ ifeq ($(HOSTTYPE), x86_64_Darwin)
 
 	$(CC) $(CFLAGS) -Llibft -lft -o stt_test main.c libft_malloc.a
 	$(CC) $(CFLAGS) -Llibft -lft -o stt_temoin main.c
+endif
+ifeq ($(HOSTTYPE), x86_64_Linux)
+	$(CC) $(CFLAGS) -fPIC -o dyn_test main.c -Llibft -lft
+
+	$(CC) $(CFLAGS) -o stt_test main.c -Wl, -v -Wl, -Llibft -Wl, -lft -Wl, -L. -Wl, -lft_malloc
+	$(CC) $(CFLAGS) -o stt_temoin main.c -Llibft -lft
 endif
 
 %.o:%.c inc/malloc.h
@@ -74,4 +80,4 @@ re:
 dep:
 	make -C libft
 
-.PHONY: dep all $(NAME) clean fclean re
+.PHONY: dep all $(NAME) clean fclean re tests
