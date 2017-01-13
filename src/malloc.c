@@ -24,33 +24,10 @@ void	*last_hand_cache(void *ptr, size_t size)
 			return (p + TOBH(p).mult);
 		}
 	}
-	else if (ptr == NULL && size == 0)
+	else if (ptr == NULL && size == 0) {
 		return p;
-	return (NULL);
-}
-
-void	show_alloc_mem(void)
-{
-	int i;
-	int j;
-	int chunk_size;
-
-	i = 0;
-	while (MAP(i))
-	{
-		j = 0;
-		chunk_size = 0;
-		SPRINTF("%d: %p\n", i, MAP(i));
-		while (j < CHUNK_SIZE) {
-			if (MAP(i) + j == last_hand_cache(NULL, 0))
-				SPRINTF("C");
-			SPRINTF("\t%p %d [%d] %s\n", MAP(i) + j, TOBH((MAP(i) + j)).size, TOBH((MAP(i) + j)).mult, TOBH((MAP(i) + j)).is_free ? "FREE" : "OCCUPIED");
-			chunk_size += TOBH((MAP(i) + j)).mult;
-			j += TOBH((MAP(i) + j)).mult;
-		}
-		SPRINTF("[ %d ] %s\n", chunk_size, chunk_size == CHUNK_SIZE ? "true" : "false");
-		i += 1;
 	}
+	return (NULL);
 }
 
 void	*large_alloc(size_t size)
@@ -80,41 +57,59 @@ void	*large_alloc(size_t size)
 
 void	*get_next_map(size_t index, size_t size)
 {
-	MAP(index) = MMAP(CHUNK_SIZE);
-	if (MAP(index) == MAP_FAILED) {
+	MAP(index) = REF_ALLOC(CHUNK_SIZE);
+	if (MAP(index).map == MAP_FAILED) {
 		SPRINTF("Map Failed\n");
 		return (NULL);
 	}
-	SPRINTF("new map %p -> %p\n", MAP(index), MAP(index) + CHUNK_SIZE);
-	TOBH(MAP(index)) = (struct binaryheap){ size, (CHUNK_SIZE), 0, MAP(index) };
-	last_hand_cache(MAP(index), 0);
-	return (MAP(index) + sizeof(struct binaryheap));
+	SPRINTF("new_map %p -> %p\n", MAP(index).map, MAP(index).map + CHUNK_SIZE);
+	TOBH(MAP(index).map) = (struct binaryheap){ size, (CHUNK_SIZE), 0, MAP(index).map };
+	last_hand_cache(MAP(index).map, 0);
+	return (MAP(index).map + sizeof(struct binaryheap));
 }
 
-void	*get_next_bloc(void *chunk, size_t size)
+void	*get_next_bloc(void *chunk, size_t size, size_t index)
 {
 	void	*newp;
 	int		mark;
 
+	(void)index;
 	mark = 0;
 	newp = chunk;
-	while (!((IS_FREE(newp) && SIZEBH(size) < TOBH(newp).mult && (mark = 1)) ||
+	while (!(
+		(IS_FREE(newp) && SIZEBH(size) < TOBH(newp).mult && (mark = 1)) ||
 		(SIZEBH(TOBH(newp).size) < TOBH(newp).mult / 2 &&
 			SIZEBH(size) < TOBH(newp).mult / 2 && TOBH(newp).mult / 2 > TINY && (mark = 2))))
 	{
 		// if (IS_FREE(newp) && SIZEBH(size) > TOBH(newp).mult)
 		// 	free(newp + sizeof(struct binaryheap));
 
+		// SPRINTF("\t%p %u [%d] %s\n",
+		// 	newp,
+		// 	TOBH(newp).size,
+		// 	TOBH(newp).mult,
+		// 	TOBH(newp).is_free ? "FREE" : "OCCUPIED"
+		// )
 		newp = newp + TOBH(newp).mult;
-		if (newp >= chunk + CHUNK_SIZE)
+		if (newp >= chunk + CHUNK_SIZE) {
+			SPRINTF("ERROR\n")
 			return (NULL);
+		}
 	}
 	if (mark == 1)
 	{
+		// SPRINTF("---- %p [%zu]\n", MAP(index).map, MAP(index).remaining)
+		// exit(-1);
 		TOBH(newp) = (struct binaryheap){ size, TOBH(newp).mult, 0, chunk };
 		return (newp);
 	}
 	else if (mark == 2) {
+		// SPRINTF("HI 2 ! %zu\n", index)
+		// MAP(index).remaining -= TOBH(newp).mult / 2;
+		// SPRINTF("-- %lu - %zu\n", MAP(index).remaining, size)
+		// SPRINTF("---- %p [%zu]\n", MAP(index).map, MAP(index).remaining)
+		// show_alloc_mem();
+		// exit(-1);
 		TOBH(HALFBH(newp)) = (struct binaryheap){ size, TOBH(newp).mult / 2, 0, chunk };
 		TOBH(newp) = SHRKBH(newp);
 		return (newp + TOBH(newp).mult);
@@ -147,15 +142,25 @@ void	init(void)
 	SPRINTF("thread %p\n", (void*)pthread_self());
 	SPRINTF("main map %p -> %p\n", ft_malloc.global_map, ft_malloc.global_map + INIT_SIZE);
 
-	MAP(0) = MMAP(CHUNK_SIZE);
-	if (MAP(0) == MAP_FAILED) {
+	MAP(0) = REF_ALLOC(CHUNK_SIZE);
+	if (MAP(0).map == MAP_FAILED) {
 		SPRINTF("test\n");
 		exit(-1);
 	}
-	SPRINTF("new map %p -> %p\n", MAP(0), MAP(0) + CHUNK_SIZE);
-	TOBH(MAP(0)) = (struct binaryheap){ CHUNK_SIZE, CHUNK_SIZE, 1, MAP(0) };
+	SPRINTF("new_map %p -> %p\n", MAP(0).map, MAP(0).map + CHUNK_SIZE);
+	TOBH(MAP(0).map) = (struct binaryheap){ CHUNK_SIZE, CHUNK_SIZE, 1, MAP(0).map };
 
-	last_hand_cache(MAP(0), 0);
+	last_hand_cache(MAP(0).map, 0);
+}
+
+void	display_oldp()
+{
+	int i = 0;
+
+	while (MAP(i).map)
+	{
+
+	}
 }
 
 void	*malloc(size_t size)
@@ -166,7 +171,7 @@ void	*malloc(size_t size)
 	if (!size)
 		return (NULL);
 
-	// SPRINTF("malloc: %zu\n", size);
+	SPRINTF("malloc: %zu\n", size);
 	// show_alloc_mem();
 
 	if (size >= (size_t)(CHUNK_SIZE))
@@ -174,13 +179,17 @@ void	*malloc(size_t size)
 	else
 	{
 			void *p = last_hand_cache(NULL, size);
-			if (p)
+			if (p) {
+				SPRINTF("CACHE\n")
 				return (p + sizeof(struct binaryheap));
+			}
 
 			int i = 0;
-			while (MAP(i))
+
+			// // SPRINTF("- %p [%zu]\n", MAP(i).map, MAP(i).remaining)
+			while (MAP(i).map)
 			{
-				void *p = get_next_bloc(MAP(i), size);
+				void *p = get_next_bloc(MAP(i).map, size, i);
 				if (p != 0) {
 					if ((long)p % 16 != 0) {
 						show_alloc_mem();
@@ -209,21 +218,21 @@ void	free(void *p)
 	}
 
 	int i = 0;
-	while (MAP(i))
+	while (MAP(i).map)
 	{
-		if (!( MAP(i) < p && p < MAP(i) + CHUNK_SIZE )) {
+		if (!( MAP(i).map < p && p < MAP(i).map + CHUNK_SIZE )) {
 			i += 1;
 		}
 		else
 			break;
 	}
-	if (MAP(i) == 0) {
-		SPRINTF("not free %p %p %p\n", MAP(i), p, MAP(i) + CHUNK_SIZE);
+	if (MAP(i).map == 0) {
+		SPRINTF("not free %p %p %p\n", MAP(i).map, p, MAP(i).map + CHUNK_SIZE);
 		return ;
 	}
 
 	newp = p - sizeof(struct binaryheap);
-	SPRINTF("free %p [%p], %d\n", p, newp, TOBH((newp)).size);
+	SPRINTF("free %p [%p], %u\n", p, newp, TOBH((newp)).size);
 
 	TOBH(newp).is_free = 1;
 

@@ -26,17 +26,25 @@
 
 struct binaryheap
 {
-	unsigned short	size;
-	unsigned short	mult;
+	unsigned int	size;
+	unsigned int	mult;
 	unsigned int	is_free;
 	void			*parent;
 };
 
-# define INIT_SIZE (getpagesize() * 64)
-# define CHUNK_SIZE (getpagesize() * 8) // short limits
+struct reference
+{
+	size_t			remaining;
+	void			*map;
+};
+
+#define REF_ALLOC(x) (struct reference){ x, MMAP(x) }
+
+# define INIT_SIZE (getpagesize() * 32)
+# define CHUNK_SIZE (getpagesize() * 64) // short limits
 
 # define CASTBH(alloc...) (struct binaryheap)alloc;
-# define SIZEBH(size) (int)(size + sizeof(struct binaryheap))
+# define SIZEBH(size) (unsigned int)(size + sizeof(struct binaryheap))
 # define TOBH(x) (*(struct binaryheap *)x)
 # define NEXTBH(x) (x + TOBH(x).mult)
 # define PREVBH(x) (x - TOBH(x).mult)
@@ -59,13 +67,15 @@ struct s_malloc {
 
 struct s_malloc ft_malloc;
 
-#define MAP(x) (((void**)ft_malloc.global_map)[x])
+#define MAP(x) (((struct reference*)ft_malloc.global_map)[x])
 
 // extern void	*g_oldp;
 
 void free(void *ptr);
 void *malloc(size_t size);
 void *realloc(void *ptr, size_t size);
+void show_alloc_mem(void);
+void *last_hand_cache(void *ptr, size_t size);
 
 static int sizes[] = {
 	4096,

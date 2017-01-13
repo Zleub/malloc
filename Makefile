@@ -15,7 +15,7 @@ NAME = ft_malloc
 STATIC_NAME = libft_malloc_$(HOSTTYPE).$(STATIC_EXT)
 DYNAMIC_NAME = libft_malloc_$(HOSTTYPE).$(DYNAMIC_EXT)
 
-SRC =	src/malloc.c
+SRC =	src/malloc.c src/utils.c
 OBJ = $(subst .c,.o,$(SRC))
 
 export CC = clang

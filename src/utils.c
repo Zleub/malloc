@@ -6,44 +6,37 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/22 22:49:34 by adebray           #+#    #+#             */
-/*   Updated: 2016/12/30 18:25:02 by adebray          ###   ########.fr       */
+/*   Updated: 2017/01/13 17:46:16 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <malloc.h>
 
-void	print_from_pointer(void *p)
-{
-	struct binaryheap *dt;
-
-	dt = p;
-	SPRINTF("%8d [%6d] @ %p [%s]\n", dt[0].size, dt[0].mult, p,
-		dt[0].is_free == 1 ? "FREE" : "OCCUPIED");
-}
-
-#define INDEX(x) (((void **)g_oldp)[x])
-
 void	show_alloc_mem(void)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
+	int chunk_size;
 
-	j = 0;
-	if (!g_oldp)
-		return ;
-	while (INDEX(j))
+	i = 0;
+	while (MAP(i).map)
 	{
-		i = 0;
-		SPRINTF("INDEX: %d\n", j);
-		while (i < CHUNK_SIZE)
-		{
-			print_from_pointer(INDEX(j) + i);
-			if (TOBH((INDEX(j) + i)).mult == 0) {
-				SPRINTF("trouble @ %p\n", INDEX(j) + i);
-				exit(-1);
-			}
-			i += TOBH((INDEX(j) + i)).mult;
+		j = 0;
+		chunk_size = 0;
+		SPRINTF("%d: %p [%zu]\n", i, MAP(i).map, MAP(i).remaining);
+		while (j < CHUNK_SIZE) {
+			if (MAP(i).map + j == last_hand_cache(NULL, 0))
+				SPRINTF("C");
+			SPRINTF("\t%p %u [%d] %s\n",
+				MAP(i).map + j,
+				TOBH((MAP(i).map + j)).size,
+				TOBH((MAP(i).map + j)).mult,
+				TOBH((MAP(i).map + j)).is_free ? "FREE" : "OCCUPIED"
+			);
+			chunk_size += TOBH((MAP(i).map + j)).mult;
+			j += TOBH((MAP(i).map + j)).mult;
 		}
-		j += 1;
+		SPRINTF("[ %d ] %s\n", chunk_size, chunk_size == CHUNK_SIZE ? "true" : "false");
+		i += 1;
 	}
 }

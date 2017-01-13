@@ -51,11 +51,11 @@ int main(int ac, char**argv) {
 	global_call_cmp = 0;
 
 	// debug();
-	// SPRINTF("BEGINTEST\n")
+	SPRINTF("BEGINTEST\n")
 	(void)ac;
 	while (i < TESTSIZE) {
 
-		int j = rand() % (16 * 16 * 3) + 5;
+		int j = 1024; //rand() % (16 * 16 * 3) + 5;
 		void *p = malloc( j );
 		if (p == 0) {
 			SPRINTF("main: 0x0\n");
