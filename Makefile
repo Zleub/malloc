@@ -19,7 +19,7 @@ SRC =	src/malloc.c src/utils.c
 OBJ = $(subst .c,.o,$(SRC))
 
 export CC = clang
-export CFLAGS = -O0 -Wall -Werror -Wextra -Iinc
+export CFLAGS = -O3 -Wall -Werror -Wextra -Iinc
 
 all: dep $(NAME)
 

@@ -1,0 +1,1851 @@
+[32mmy malloc init 0x105c8e000 131072 (16384)
+[0m~~~ a.out ~~~
+main 131072 | chunk 1048576
+sizeof binaryheap 24
+thread 0x7fff7529f000
+main map 0x105c8e000 -> 0x105cae000
+new_map 0x105cae000 -> 0x105dae000
+malloc: 8
+CACHE
+malloc: 16
+CACHE
+malloc: 16
+CACHE
+malloc: 32
+CACHE
+malloc: 32
+CACHE
+malloc: 32
+CACHE
+malloc: 32
+CACHE
+malloc: 8
+CACHE
+malloc: 27
+CACHE
+malloc: 22
+CACHE
+malloc: 15
+CACHE
+malloc: 45
+CACHE
+malloc: 142
+CACHE
+malloc: 45
+CACHE
+malloc: 50
+malloc: 47
+CACHE
+malloc: 15
+malloc: 64
+malloc: 49
+malloc: 67
+CACHE
+malloc: 52
+CACHE
+malloc: 54
+malloc: 12
+CACHE
+malloc: 45
+malloc: 32
+malloc: 16
+malloc: 64
+malloc: 14
+malloc: 16
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+malloc: 1024
+CACHE
+malloc: 1024
+malloc: 1024
+ERROR
+new_map 0x105fdc000 -> 0x1060dc000
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+malloc: 1024
+CACHE
+malloc: 1024
+ERROR
+malloc: 1024
+ERROR
+ERROR
+new_map 0x1060dc000 -> 0x1061dc000
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE
+malloc: 1024
+CACHE

@@ -12,3 +12,5 @@ echo 'newmap call / malloc call: '(echo 'scale=4; '$new_map_count' / '$malloc_co
 echo 'cache call / malloc call: '(echo 'scale=4; '$CACHE_count' / '$malloc_count | bc -l)
 echo 'error call / malloc call: '(echo 'scale=4; '$ERROR_count' / '$malloc_count | bc -l)
 
+echo '---------------------------'
+head log

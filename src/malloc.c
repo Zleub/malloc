@@ -17,7 +17,7 @@ void	*last_hand_cache(void *ptr, size_t size)
 			return (p);
 		}
 
-		if (SIZEBH(TOBH(p).size) < TOBH(p).mult / 2 && SIZEBH(size) < TOBH(p).mult / 2 && TOBH(p).mult / 2 > TINY)
+		if (SIZEBH(TOBH(p).size) < TOBH(p).mult / 2 && SIZEBH(size) < TOBH(p).mult / 2 && TOBH(p).mult / 2 >= TINY)
 		{
 			TOBH(HALFBH(p)) = (struct binaryheap){ size, TOBH(p).mult / 2, 0, TOBH(p).parent };
 			TOBH(p) = SHRKBH(p);
@@ -74,12 +74,12 @@ void	*get_next_bloc(void *chunk, size_t size, size_t index)
 	int		mark;
 
 	(void)index;
+	(void)size;
 	mark = 0;
 	newp = chunk;
 	while (!(
 		(IS_FREE(newp) && SIZEBH(size) < TOBH(newp).mult && (mark = 1)) ||
-		(SIZEBH(TOBH(newp).size) < TOBH(newp).mult / 2 &&
-			SIZEBH(size) < TOBH(newp).mult / 2 && TOBH(newp).mult / 2 > TINY && (mark = 2))))
+		(SIZEBH(TOBH(newp).size) < TOBH(newp).mult / 2 && SIZEBH(size) < TOBH(newp).mult / 2 && TOBH(newp).mult / 2 >= TINY && (mark = 2))))
 	{
 		// if (IS_FREE(newp) && SIZEBH(size) > TOBH(newp).mult)
 		// 	free(newp + sizeof(struct binaryheap));
@@ -91,7 +91,7 @@ void	*get_next_bloc(void *chunk, size_t size, size_t index)
 		// 	TOBH(newp).is_free ? "FREE" : "OCCUPIED"
 		// )
 		newp = newp + TOBH(newp).mult;
-		if (newp >= chunk + CHUNK_SIZE) {
+		if (newp >= chunk + CHUNK_SIZE - 16) {
 			SPRINTF("ERROR\n")
 			return (NULL);
 		}
@@ -131,14 +131,15 @@ void	sighandler(int sig)
 
 void	init(void)
 {
-	signal(SIGSEGV, sighandler);
+	// signal(SIGSEGV, sighandler);
 	ft_malloc.debug_fd = open("/Users/adebray/malloc/log",
 		O_CREAT | O_TRUNC | O_APPEND | O_WRONLY, 0744);
 
 	ft_malloc.global_map = MMAP(INIT_SIZE);
 	SPRINTF("\e[32mmy malloc init %p %d (%lu)\n\033[0m", ft_malloc.global_map, INIT_SIZE, INIT_SIZE / sizeof(void *));
 	SPRINTF("~~~ %s ~~~\n", getprogname());
-	SPRINTF("main %d | chunk %d\n", INIT_SIZE, (unsigned short)CHUNK_SIZE);
+	SPRINTF("main %d | chunk %d\n", INIT_SIZE, CHUNK_SIZE);
+	SPRINTF("sizeof binaryheap %zu\n", sizeof(struct binaryheap));
 	SPRINTF("thread %p\n", (void*)pthread_self());
 	SPRINTF("main map %p -> %p\n", ft_malloc.global_map, ft_malloc.global_map + INIT_SIZE);
 
@@ -171,8 +172,10 @@ void	*malloc(size_t size)
 	if (!size)
 		return (NULL);
 
+	if (size == 666)
+		show_alloc_mem();
+
 	SPRINTF("malloc: %zu\n", size);
-	// show_alloc_mem();
 
 	if (size >= (size_t)(CHUNK_SIZE))
 		return (large_alloc(size));
@@ -186,9 +189,9 @@ void	*malloc(size_t size)
 
 			int i = 0;
 
-			// // SPRINTF("- %p [%zu]\n", MAP(i).map, MAP(i).remaining)
 			while (MAP(i).map)
 			{
+				// SPRINTF("- %p [%zu]\n", MAP(i).map, MAP(i).remaining)
 				void *p = get_next_bloc(MAP(i).map, size, i);
 				if (p != 0) {
 					if ((long)p % 16 != 0) {
@@ -200,6 +203,7 @@ void	*malloc(size_t size)
 				}
 				i += 1;
 			}
+
 			if (i * sizeof(void*) > (unsigned long)INIT_SIZE - 16) {
 				SPRINTF("no more place in oldp\n")
 				exit(-1);

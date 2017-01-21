@@ -25,22 +25,13 @@ int global_call_cmp;
 void show_alloc_mem();
 const char *getprogname(void);
 
-char *str = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\
-Cras at euismod urna. Vdawestibulum porta ultrices ex, a lacinia lorem imperdiet ac.\
-Morbi et dui neque. Moawddaasum eget vulputate euismod, nisi ex venenatis lorem,\
-ut laoreet dui velit quiswd dleo. Aeneanaddaad mattis venenatis lorem vel finibus.\
-Donec semper variuwddas nisisda ddaawetad aawdwwawaadwddadaddliquet.\
-Cras et mauris ut eros wdaldiddasadawawdwawdquam effdicitur a vitae ante.\
-Proin sed velit non nidwawddbh varius pellentesque.\
-Vestibulum viverra urna a awdmi sagittis, ac tristique augue efficitur.\
-Morbi sit amet ewdaawdleifend nulla, in dapibus nisl.\
-Praesent elementawum consequat ultrices.\
-Mauris lobortis datellus nec ipsum ultricies pharetra.\
-Class aptent taciti sawoawdciosqu ad litora torquent per conubia nostra,\
-per inceptos himenaeos. Donec nec mattis justo.\
-Fusce auctor vehicula mi. Donec molestie tincidunt dolor,\
-ac gravida urna auctor ac. Vestibulum sagittis, ante vel ullamcorper bibendum,\
-enim erat rhoncus urna, nec viverra ipsum sem non velit. Ut eros arcu posuere.";
+char *str = "dawdawdadwfawdsaLorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mattis risus sed hendrerit ornare. Suspendisse accumsan lectus a nisi aliquam molestie. Suspendisse pharetra sagittis tortor vel lacinia. Quisque gravida mi sit amet elit fermentum eleifend sed nec lorem. Donec varius porttitor ex, a pharetra eros tempor vitae. Donec dignissim volutpat gravida. Suspendisse auctor pharetra dolor eget ullamcorper. Aenean ultricies magna ut pretium faucibus.\
+Proin blandit euismod accumsan. Curabitur tempus non massa vel tempus. Nam ante arcu, bibendum nec enim non, varius dapibus sapien. Cras nec quam pharetra, tincidunt justo quis, gravida neque. Nullam hendrerit lacus ut dolor semper, at imperdiet lorem malesuada. Vivamus rhoncus dui vel nunc commodo, non condimentum ante consequat. Phasellus non justo ornare, rutrum turpis id, posuere eros. Morbi ac ante magna.\
+Integer et diam iaculis, semper nunc vitae, ultrices elit. Nulla eget purus congue quam mollis facilisis ornare eu ligula. Ut eleifend posuere leo vulputate commodo. Sed interdum non nulla sed lacinia. Ut rutrum sapien ut eleifend fermentum. Nulla facilisi. Aenean consequat, nunc eu convallis semper, metus dolor tempus nulla, non placerat ligula libero eget eros. Sed vel rutrum metus. Suspendisse ac erat lacinia purus commodo auctor non tincidunt ipsum.\
+Morbi tincidunt metus odio, sed sagittis est porttitor sit amet. Donec in gravida nunc. Integer fermentum, mi id pulvinar vehicula, dolor nisi tincidunt felis, cursus tristique justo sem id ipsum. Maecenas nibh orci, vehicula quis faucibus quis, rhoncus sed metus. Vestibulum congue, dui nec condimentum finibus, tortor mi gravida risus, pulvinar placerat est ante eu odio. In et purus nec nulla aliquam maximus vel vitae urna. Donec a mi pretium, egestas ex at, faucibus magna.\
+Sed felis risus, luctus in iaculis ac, mattis quis ante. Ut placerat, tellus a porttitor laoreet, augue tortor cursus tellus, quis gravida risus odio vitae mi. Etiam luctus accumsan neque, eu maximus metus condimentum eu. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed aliquam convallis nisl at scelerisque. Proin vitae ex et urna finibus aliquam eu id turpis. Suspendisse pharetra velit eget ornare pharetra. Praesent vestibulum sem at libero tempus, nec viverra leo posuere. Integer vulputate mollis dolor at dictum. Integer ex arcu, vulputate interdum nulla in, varius vulputate orci. Suspendisse sollicitudin venenatis mi, non accumsan nisl dignissim at. Nam lacus augue, imperdiet eget nisl in, rhoncus efficitur enim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut volutpat neque. Donec posuere nisl et leo ullamcorper vestibulum varius vitae orci.\
+Etiam cursus tincidunt turpis, quis finibus felis condimentum at. Phasellus at quam est. Curabitur dictum sapien in iaculis euismod. Curabitur mollis nulla nunc, sit amet euismod libero feugiat id. Morbi et felis non velit tempor egestas ac ornare nisi. Mauris sed nisi eget tellus lobortis vehicula. Vivamus vitae neque dapibus leo imperdiet porta. Cras pellentesque nisi eu tellus vulputate, non euismod sem malesuada. Aliquam bibendum efficitur dui et consectetur. Vivamus egestas maximus porttitor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sodales vel ex nec vehicula. Integer tortor lorem, volutpat suscipit sodales id, elementum et mi. Praesent aliquet lectus nunc, sed ullamcorper ex egestas et.\
+Aliquam vitae erat arcu. Donec quis vehicula massa, nec tincidunt leo. Donec egestas nunc eget quam scelerisque, quis maximus magna rhoncus. Aenean sodales sem a volutpat dignissim. In ac placerat enim, et vestibulum orci. Ut maximus, leo at consectetur tincidunt, nunc nisi pellentesque diam, at blandit enim lorem et quam. Proin consectetur ligula et dui volutpat finibus. Suspendisse et metus ut tellus consequat ornare vel et est. Sed quis nulla sodales, bibendum eros id, rutrum dui. Proin tellus lorem, condimentum sit amet massa eget, volutpat ultricies leo. Nulla semper, mi non ornare malesuada, ex nunc auctor nulla, a volutpat.";
 
 int main(int ac, char**argv) {
 
@@ -51,11 +42,11 @@ int main(int ac, char**argv) {
 	global_call_cmp = 0;
 
 	// debug();
-	SPRINTF("BEGINTEST\n")
+	// SPRINTF("BEGINTEST\n")
 	(void)ac;
 	while (i < TESTSIZE) {
 
-		int j = 1024; //rand() % (16 * 16 * 3) + 5;
+		int j = atoi(argv[1]); // || rand() % (16 * 16 * 3) + 5;
 		void *p = malloc( j );
 		if (p == 0) {
 			SPRINTF("main: 0x0\n");
@@ -78,7 +69,12 @@ int main(int ac, char**argv) {
 		i += 1;
 		global_call_cmp += 1;
 	}
+	void *p = malloc(666);
+	bzero(p, 665);
+	strncpy(p, str, 665);
+
 	char str[1024] = {0};
 	sprintf(str, "~~~ %s ~~~\n", argv[0]);
+
 	ft_putstr(str);
 }

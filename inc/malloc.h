@@ -41,7 +41,7 @@ struct reference
 #define REF_ALLOC(x) (struct reference){ x, MMAP(x) }
 
 # define INIT_SIZE (getpagesize() * 32)
-# define CHUNK_SIZE (getpagesize() * 64) // short limits
+# define CHUNK_SIZE (getpagesize() * 1024) // short limits
 
 # define CASTBH(alloc...) (struct binaryheap)alloc;
 # define SIZEBH(size) (unsigned int)(size + sizeof(struct binaryheap))
