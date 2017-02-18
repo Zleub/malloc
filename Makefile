@@ -21,7 +21,7 @@ OBJ = $(subst .c,.o,$(SRC))
 export CC = clang
 export CFLAGS = -O3 -Wall -Werror -Wextra -Iinc
 
-all: dep $(NAME)
+all: dep $(NAME) tests
 
 tests: main.c
 ifeq ($(HOSTTYPE), x86_64_Darwin)

@@ -44,6 +44,10 @@ int main(int ac, char**argv) {
 	// debug();
 	// SPRINTF("BEGINTEST\n")
 	(void)ac;
+	if (ac < 2) {
+		SPRINTF("Dude\n");
+		return (-1);
+	}
 	while (i < TESTSIZE) {
 
 		int j = atoi(argv[1]); // || rand() % (16 * 16 * 3) + 5;
@@ -65,6 +69,7 @@ int main(int ac, char**argv) {
 		// SPRINTF("----------------------------------------------\n");
 		// SPRINTF("%d\n", global_call_cmp);
 		// show_alloc_mem();
+		free(array[rand() % i]);
 
 		i += 1;
 		global_call_cmp += 1;

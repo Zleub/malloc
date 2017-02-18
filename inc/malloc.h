@@ -21,38 +21,11 @@
 # define SPRINTF(args...) {char str[1024] = {0}; sprintf(str, args); ft_putstr_fd(str, ft_malloc.debug_fd); }
 // # define SPRINTF(args...) {(void)0; }
 
-# define LARGE 0000
-# define TINY 32
-
-struct binaryheap
-{
-	unsigned int	size;
-	unsigned int	mult;
-	unsigned int	is_free;
-	void			*parent;
-};
-
-struct reference
-{
-	size_t			remaining;
-	void			*map;
-};
-
-#define REF_ALLOC(x) (struct reference){ x, MMAP(x) }
-
-# define INIT_SIZE (getpagesize() * 32)
 # define CHUNK_SIZE (getpagesize() * 1024) // short limits
+# define INIT_SIZE (CHUNK_SIZE / 16)
 
-# define CASTBH(alloc...) (struct binaryheap)alloc;
-# define SIZEBH(size) (unsigned int)(size + sizeof(struct binaryheap))
-# define TOBH(x) (*(struct binaryheap *)x)
-# define NEXTBH(x) (x + TOBH(x).mult)
-# define PREVBH(x) (x - TOBH(x).mult)
-# define HALFBH(x) (x + TOBH(x).mult / 2)
-
-# define SHRKBH(x) CASTBH({TOBH(x).size, TOBH(x).mult / 2, TOBH(x).is_free, TOBH(x).parent})
-
-# define IS_FREE(x) (TOBH(x).is_free == 1)
+# define LARGE CHUNK_SIZE
+# define TINY 32
 
 # define PROT_FLAGS (PROT_WRITE | PROT_READ)
 # define MAP_FLAGS (MAP_ANONYMOUS | MAP_PRIVATE)
@@ -60,16 +33,16 @@ struct reference
 
 struct s_malloc {
 	void *global_map;
+	void *free_map;
 	void *global_cache;
 
 	int debug_fd;
+	size_t nb_fields;
 };
 
 struct s_malloc ft_malloc;
 
-#define MAP(x) (((struct reference*)ft_malloc.global_map)[x])
-
-// extern void	*g_oldp;
+#define MAP(x) (((void**)ft_malloc.global_map)[x])
 
 void free(void *ptr);
 void *malloc(size_t size);

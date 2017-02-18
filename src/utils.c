@@ -14,29 +14,12 @@
 
 void	show_alloc_mem(void)
 {
-	int i;
-	int j;
-	int chunk_size;
+	size_t i = 0;
 
-	i = 0;
-	while (MAP(i).map)
+	while (i < INIT_SIZE / sizeof(void*))
 	{
-		j = 0;
-		chunk_size = 0;
-		SPRINTF("%d: %p [%zu]\n", i, MAP(i).map, MAP(i).remaining);
-		while (j < CHUNK_SIZE) {
-			if (MAP(i).map + j == last_hand_cache(NULL, 0))
-				SPRINTF("C");
-			SPRINTF("\t%p %u [%d] %s\n",
-				MAP(i).map + j,
-				TOBH((MAP(i).map + j)).size,
-				TOBH((MAP(i).map + j)).mult,
-				TOBH((MAP(i).map + j)).is_free ? "FREE" : "OCCUPIED"
-			);
-			chunk_size += TOBH((MAP(i).map + j)).mult;
-			j += TOBH((MAP(i).map + j)).mult;
-		}
-		SPRINTF("[ %d ] %s\n", chunk_size, chunk_size == CHUNK_SIZE ? "true" : "false");
+		if (MAP(i))
+			SPRINTF("%p\n", MAP(i));
 		i += 1;
 	}
 }
