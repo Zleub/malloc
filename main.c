@@ -18,7 +18,7 @@
 // 	return (0);
 // }
 
-#define TESTSIZE 10000
+#define TESTSIZE 1000000
 
 int global_call_cmp;
 
@@ -69,7 +69,7 @@ int main(int ac, char**argv) {
 		// SPRINTF("----------------------------------------------\n");
 		// SPRINTF("%d\n", global_call_cmp);
 		// show_alloc_mem();
-		free(array[rand() % i]);
+		// free(array[rand() % i]);
 
 		i += 1;
 		global_call_cmp += 1;

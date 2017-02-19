@@ -16,10 +16,10 @@ void	show_alloc_mem(void)
 {
 	size_t i = 0;
 
-	while (i < INIT_SIZE / sizeof(void*))
+	while (i < INIT_SIZE / sizeof(struct s_ref))
 	{
-		if (MAP(i))
-			SPRINTF("%p\n", MAP(i));
+		if (MAP(i).self)
+			SPRINTF("%p [%p]\n", MAP(i).self, MAP(i).mmap);
 		i += 1;
 	}
 }
