@@ -18,8 +18,8 @@
 
 # include <stdio.h>
 
-// # define SPRINTF(args...) { char str[1024] = {0}; sprintf(str, args); ft_putstr_fd(str, ft_malloc.debug_fd); }
-# define SPRINTF(args...) { (void)0; }
+# define SPRINTF(args...) { char str[1024] = {0}; sprintf(str, args); ft_putstr_fd(str, ft_malloc.debug_fd); }
+// # define SPRINTF(args...) { (void)0; }
 
 # define CHUNK_SIZE (getpagesize() * 1024) // short limits
 # define INIT_SIZE (CHUNK_SIZE / 16)

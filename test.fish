@@ -1,6 +1,7 @@
 make
 
-for var in 4 50 64 100 128 416 496 512 1000 1024 2000 2048 3000 3072 4000 4096
+for var in 1024
+# 4 50 64 100 128 416 496 512 1000 1024 2000 2048 3000 3072 4000 4096
 	rm -rf /tmp/time /tmp/sys_time
 
 	time -l ./dyn_test $var > /tmp/time 2> /tmp/sys_time
