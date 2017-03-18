@@ -18,7 +18,7 @@
 // 	return (0);
 // }
 
-#define TESTSIZE 1000
+#define TESTSIZE 10 // 00
 
 int global_call_cmp;
 

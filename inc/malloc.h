@@ -18,15 +18,15 @@
 
 # include <stdio.h>
 
-# define SPRINTF(args...) { char str[1024] = {0}; sprintf(str, args); ft_putstr_fd(str, ft_malloc.debug_fd); }
-// # define SPRINTF(args...) { (void)0; }
+// # define SPRINTF(args...) { char str[1024] = {0}; sprintf(str, args); ft_putstr_fd(str, ft_malloc.debug_fd); }
+# define SPRINTF(args...) { (void)0; }
 
 # define CHUNK_SIZE (getpagesize() * 1024) // short limits
-# define INIT_SIZE (CHUNK_SIZE / 16)
+# define INIT_SIZE CHUNK_SIZE
 
-# define TINY SMALL / 16
-# define SMALL 4096
-# define LARGE CHUNK_SIZE
+# define TINY (size_t)(SMALL / 4)
+# define SMALL (size_t)(getpagesize() / 4)
+# define LARGE (size_t)CHUNK_SIZE
 
 # define PROT_FLAGS (PROT_WRITE | PROT_READ)
 # define MAP_FLAGS (MAP_ANONYMOUS | MAP_PRIVATE)
@@ -34,11 +34,13 @@
 
 struct s_malloc {
 	void *global_map;
-	void *free_map;
 	void *global_cache;
+	void *free_map;
+	void *free_cache;
 
 	int debug_fd;
-	size_t nb_fields;
+	size_t map_fields;
+	size_t free_fields;
 };
 
 struct s_ref {
@@ -49,6 +51,7 @@ struct s_ref {
 struct s_malloc ft_malloc;
 
 #define MAP(x) (((struct s_ref*)ft_malloc.global_map)[x])
+#define FREE(x) (((struct s_ref*)ft_malloc.free_map)[x])
 
 void free(void *ptr);
 void *malloc(size_t size);
