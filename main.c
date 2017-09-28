@@ -1,15 +1,29 @@
+//           `--::-.`
+//       ./shddddddddhs+.
+//     :yddddddddddddddddy:
+//   `sdddddddddddddddddddds`
+//  /ddddy:oddddddddds:sddddd/   @By: Debray Arnaud <adebray> - adebray@student.42.fr
+//  sdddddddddddddddddddddddds   @Last modified by: adebray
+//  sdddddddddddddddddddddddds
+//  :ddddddddddhyyddddddddddd:   @Created: 2017-08-12T09:29:05+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-09-28T20:22:32+02:00
+//    +ddddddh`+dh +dddddddo
+//     -sdddddh///sdddddds-
+//       .+ydddddddddhs/.
+//           .-::::-`
+
 #undef SUPPORT_ZONES
 
 #include <malloc.h>
 
 // int main(void) {
 
-// 	SPRINTF("%zu\n", sizeof(struct binaryheap));
+// 	dprintf(2, "%zu\n", sizeof(struct binaryheap));
 // 	int i = 0;
 // 	while (i < 10) {
 // 		char test[] = "arnoarnoarnoarnoarnoarnoarnoarno";
 // 		int i = rand() % 10 + 5;
-// 		SPRINTF("allocate %d\n", i);
+// 		dprintf(2, "allocate %d\n", i);
 // 		void *p = malloc( i );
 
 // 		strncpy(p, test, i - 1);
@@ -18,7 +32,7 @@
 // 	return (0);
 // }
 
-#define TESTSIZE 1000
+#define TESTSIZE 1024 // 4096 * 8
 
 int global_call_cmp;
 
@@ -42,10 +56,10 @@ int main(int ac, char**argv) {
 	global_call_cmp = 0;
 
 	// debug();
-	// SPRINTF("BEGINTEST\n")
+	// dprintf(2, "BEGINTEST\n")
 	(void)ac;
 	if (ac < 2) {
-		SPRINTF("Dude\n");
+		dprintf(2, "Dude\n");
 		return (-1);
 	}
 	while (i < TESTSIZE) {
@@ -53,23 +67,27 @@ int main(int ac, char**argv) {
 		int j = atoi(argv[1]); // || rand() % (16 * 16 * 3) + 5;
 		void *p = malloc( j );
 		if (p == 0) {
-			SPRINTF("main: 0x0\n");
-			// exit(-1);
+			dprintf(2, "main: 0x0\n");
+			exit(-1);
 		}
 		bzero(p, j);
 		cmp += j;
 
-		// SPRINTF("allocate %d @ %p\n", j, p ? p - sizeof(struct binaryheap) : p );
+		// dprintf(2, "allocate %d @ %p\n", j, p ? p - sizeof(struct binaryheap) : p );
 
 		array[i] = p;
 		strncpy(p, str, j - 1);
 		if (strlen(p) != (unsigned long)j - 1)
-			SPRINTF("I GOT AN ISSUE : %lu vs %d\n", strlen(p), j);
+			dprintf(2, "I GOT AN ISSUE : %lu vs %d\n", strlen(p), j);
 
-		// SPRINTF("----------------------------------------------\n");
-		// SPRINTF("%d\n", global_call_cmp);
+		// dprintf(2, "----------------------------------------------\n");
+		// dprintf(2, "%d\n", global_call_cmp);
 		// show_alloc_mem();
-		free(array[rand() % i]);
+		// int index = rand() % i;
+		// if (array[index]) {
+		// 	free(array[index]);
+		// 	array[index] = 0;
+		// }
 
 		i += 1;
 		global_call_cmp += 1;
@@ -79,7 +97,7 @@ int main(int ac, char**argv) {
 	strncpy(p, str, 665);
 
 	char str[1024] = {0};
-	sprintf(str, "~~~ %s ~~~\n", argv[0]);
+	sprintf(str, "~~~ END %s ~~~\n", argv[0]);
 
 	ft_putstr(str);
 }

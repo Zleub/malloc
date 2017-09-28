@@ -1,132 +1,76 @@
+//           `--::-.`
+//       ./shddddddddhs+.
+//     :yddddddddddddddddy:
+//   `sdddddddddddddddddddds`
+//  /ddddy:oddddddddds:sddddd/   @By: Debray Arnaud <adebray> - adebray@student.42.fr
+//  sdddddddddddddddddddddddds   @Last modified by: adebray
+//  sdddddddddddddddddddddddds
+//  :ddddddddddhyyddddddddddd:   @Created: 2017-08-12T09:34:58+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-09-28T20:54:36+02:00
+//    +ddddddh`+dh +dddddddo
+//     -sdddddh///sdddddds-
+//       .+ydddddddddhs/.
+//           .-::::-`
+
 #include <malloc.h>
 
-// void debug()
-// {
-// 	int i = 0;
-// 	void *last = 0;
-// 	while (MAP(i).self != 0) {
-// 		if (last)
-// 			SPRINTF("%-8ld", MAP(i).self - last)
-// 		else
-// 			SPRINTF("XXXXXXXX")
-// 		SPRINTF("%4d: %p [%p]\n", i, MAP(i).self, MAP(i).mmap)
-// 		last = MAP(i).self;
-// 		i += 1;
-// 	}
-// 	SPRINTF("\n")
-// 	SPRINTF("--  --  --  --  --  --\n")
-// 	SPRINTF("\n")
-// 	i = 0;
-// 	while (FREE(i).self != 0) {
-// 		SPRINTF("%12d: %p [%p]\n", i, FREE(i).self, FREE(i).mmap)
-// 		last = FREE(i).self;
-// 		i += 1;
-// 	}
-// }
-
-void	init(void)
+void init(void)
 {
 	ft_malloc.debug_fd = open("/Users/adebray/malloc/log", O_CREAT | O_TRUNC | O_WRONLY, 0744);
+	ft_malloc.tiny_head = MMAP(INIT_SIZE);
+	ft_malloc.tiny_tail = ft_malloc.tiny_head;
+	ft_malloc.small_head = MMAP(INIT_SIZE);
+	ft_malloc.small_tail = ft_malloc.small_head;
+	// ft_malloc.free_head = MMAP(INIT_SIZE);
+	// ft_malloc.free_tail = ft_malloc.free_head;
 
-	ft_malloc.global_map = MMAP(INIT_SIZE);
-	ft_malloc.free_map = MMAP(INIT_SIZE);
-
-	SPRINTF("my malloc init %p %d (%lu)\n", ft_malloc.global_map, INIT_SIZE, INIT_SIZE / sizeof(struct s_ref));
 	SPRINTF("~~~ %s ~~~\n", getprogname());
-	SPRINTF("main %d | chunk %d\n", INIT_SIZE, CHUNK_SIZE);
-	// SPRINTF("sizeof binaryheap %zu\n", sizeof(struct binaryheap));
-	SPRINTF("thread %p\n", (void*)pthread_self());
-	SPRINTF("main map %p -> %p\n", ft_malloc.global_map, ft_malloc.global_map + INIT_SIZE);
-
-	void *p = MMAP(CHUNK_SIZE);
-	MAP(0) = (struct s_ref){ .self = p, .mmap = p };
-	if (p == MAP_FAILED) {
-		SPRINTF("MAP FAILED\n");
-		exit(-1);
-	}
-
-	ft_malloc.global_cache = p;
-	ft_malloc.map_fields = 0;
-	ft_malloc.free_fields = 0;
+	SPRINTF("~ my init %p %d\n", ft_malloc.tiny_head, INIT_SIZE);
+	SPRINTF("~ main map %p -> %p\n", ft_malloc.small_head, ft_malloc.small_head + INIT_SIZE);
 }
 
 void *malloc(size_t size)
 {
-	void	*ptr;
-
-	if (!ft_malloc.global_map)
+	if (!ft_malloc.tiny_head)
 		init();
+	if (size == 666) {
+		SPRINTF("~ tiny map %p -> %p [%lu / %lu]\n", ft_malloc.tiny_head, ft_malloc.tiny_tail, (ft_malloc.tiny_tail - ft_malloc.tiny_head) / TINY, (ft_malloc.tiny_head + INIT_SIZE - ft_malloc.tiny_head) / TINY);
+		SPRINTF("~ small map %p -> %p [%lu / %lu]\n", ft_malloc.small_head, ft_malloc.small_tail, (ft_malloc.small_tail - ft_malloc.small_head) / SMALL, (ft_malloc.small_head + INIT_SIZE - ft_malloc.small_head) / SMALL);
+		// SPRINTF("~ free map %p -> %p [%lu / %lu]\n", ft_malloc.free_head, ft_malloc.free_tail, (ft_malloc.free_tail - ft_malloc.free_head) / 32);
+	}
 
-	SPRINTF("malloc\n")
-	ptr = ft_malloc.global_cache;
-	if (ptr + size > MAP(ft_malloc.map_fields).mmap + CHUNK_SIZE) {
-		ft_malloc.map_fields += 1;
-		void *p = MMAP(CHUNK_SIZE);
-		MAP(ft_malloc.map_fields) = (struct s_ref){ .self = p, .mmap = 0x0 };
-		if (MAP(ft_malloc.map_fields).self == MAP_FAILED) {
-			return (NULL);
+	SPRINTF("MALLOC %zu\n", size);
+	if (size <= TINY) {
+		void *_r = ft_malloc.tiny_tail;
+		if (ft_malloc.tiny_tail + TINY > ft_malloc.tiny_head + INIT_SIZE) {
+			SPRINTF("MAP\n");
+			ft_malloc.tiny_tail = MMAP(INIT_SIZE);
+			ft_malloc.tiny_head = ft_malloc.tiny_tail;
+			return (ft_malloc.tiny_head);
 		}
-		ft_malloc.global_cache = MAP(ft_malloc.map_fields).self;
-		return ft_malloc.global_cache;
+		ft_malloc.tiny_tail += TINY;
+		return (_r);
 	}
-
-	if (ft_malloc.free_fields) {
-		int i = 0;
-		while (FREE(i).self != 0) {
-			int j = 0;
-			while (MAP(j).self != 0) {
-				if (MAP(j).self == FREE(i).self && MAP(j + 1).self - MAP(j).self != 0 )
-				{
-					if (size <= (size_t)(MAP(j + 1).self - MAP(j).self))
-					{
-						FREE(i) = (struct s_ref){ .self = 0x0, .mmap = 0x0 };
-						ft_malloc.free_fields -= 1;
-						return (MAP(j).self);
-					}
-				}
-				j += 1;
-			}
-			i += 1;
+	if (size <= SMALL) {
+		void *_r = ft_malloc.small_tail;
+		if (ft_malloc.small_tail + SMALL > ft_malloc.small_head + INIT_SIZE) {
+			SPRINTF("MAP\n");
+			ft_malloc.small_tail = MMAP(INIT_SIZE);
+			ft_malloc.small_head = ft_malloc.small_tail;
+			return (ft_malloc.small_head);
 		}
+		ft_malloc.small_tail += SMALL;
+		return (_r);
 	}
-
-	if (size <= TINY)
-		ft_malloc.global_cache += TINY;
-	else if (size <= SMALL)
-		ft_malloc.global_cache += SMALL;
-	else {
-		void *p = MMAP(size);
-		return p;
-	}
-
-	ft_malloc.map_fields += 1;
-	MAP(ft_malloc.map_fields) = (struct s_ref){ .self = ptr, .mmap = MAP(ft_malloc.map_fields - 1).mmap };
-	return (ptr);
+	// SPRINTF("~ MAP\n");
+	SPRINTF("MAP\n");
+	return (MMAP(4096));
+	// return (0);
 }
 
-void free(void *p)
-{
-	if (p == 0 || (long)p & 0x700000000000) {
-		return ;
-	}
-	size_t i = 0;
-	while (i < ft_malloc.free_fields)
-	{
-		if (FREE(i).self == 0) {
-			FREE(i) = (struct s_ref){ .self = p, .mmap = 0x0 };
-			ft_malloc.free_fields += 1;
-			return ;
-		}
-		i += 1;
-	}
-	FREE(ft_malloc.free_fields) = (struct s_ref){ .self = p, .mmap = 0x0 };
-	ft_malloc.free_fields += 1;
+void free(void *p) {
+	(void)p;
 }
 
-void *realloc(void *ptr, size_t size)
-{
-	void *dest = malloc(size);
-	ft_memcpy(dest, ptr, size);
-	free(ptr);
-	return dest;
-}
+// main map 0x1035a5000 -> 0x1035a9000
+// main map 0x1035a53fb -> 0x1035a93fb
