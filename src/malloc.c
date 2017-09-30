@@ -14,18 +14,50 @@
 
 #include <malloc.h>
 
+void *map_tiny() {
+	void * head_save = ft_malloc.tiny_head;
+	if (ft_malloc.tiny_head) {
+		(*((struct s_chunk_head *)ft_malloc.tiny_head)).next = MMAP(INIT_SIZE);
+		ft_malloc.tiny_head = (*((struct s_chunk_head *)ft_malloc.tiny_head)).next;
+	}
+	else
+		ft_malloc.tiny_head = MMAP(INIT_SIZE);
+	ft_malloc.tiny_tail = ft_malloc.tiny_head;
+	*((struct s_chunk_head *)ft_malloc.tiny_head) = (struct s_chunk_head){
+		 .binary_heap = 0b00000000000000000000000000000001,
+		 .prev = head_save,
+		 .next = NULL
+	};
+	ft_malloc.tiny_tail += TINY;
+	return (ft_malloc.tiny_tail);
+}
+
+void *map_small() {
+	void * head_save = ft_malloc.small_head;
+	if (ft_malloc.small_head) {
+		(*((struct s_chunk_head *)ft_malloc.small_head)).next = MMAP(INIT_SIZE);
+		ft_malloc.small_head = (*((struct s_chunk_head *)ft_malloc.small_head)).next;
+	}
+	else
+		ft_malloc.small_head = MMAP(INIT_SIZE);
+	ft_malloc.small_tail = ft_malloc.small_head;
+	*((struct s_chunk_head *)ft_malloc.small_head) = (struct s_chunk_head){
+		 .binary_heap = 0b00000000000000000000000000000001,
+		 .prev = head_save,
+		 .next = NULL
+	};
+	ft_malloc.small_tail += SMALL;
+	return (ft_malloc.small_tail);
+}
+
 void init(void)
 {
 	ft_malloc.debug_fd = open("/Users/adebray/malloc/log", O_CREAT | O_TRUNC | O_WRONLY, 0744);
-	ft_malloc.tiny_head = MMAP(INIT_SIZE);
-	ft_malloc.tiny_tail = ft_malloc.tiny_head;
-	ft_malloc.small_head = MMAP(INIT_SIZE);
-	ft_malloc.small_tail = ft_malloc.small_head;
-	// ft_malloc.free_head = MMAP(INIT_SIZE);
-	// ft_malloc.free_tail = ft_malloc.free_head;
+	map_tiny();
+	map_small();
 
 	SPRINTF("~~~ %s ~~~\n", getprogname());
-	SPRINTF("~ my init %p %d\n", ft_malloc.tiny_head, INIT_SIZE);
+	SPRINTF("~ my init %p %zu %zu %zu\n", ft_malloc.tiny_head, TINY, SMALL, LARGE);
 	SPRINTF("~ main map %p -> %p\n", ft_malloc.small_head, ft_malloc.small_head + INIT_SIZE);
 }
 
@@ -42,23 +74,41 @@ void *malloc(size_t size)
 	SPRINTF("MALLOC %zu\n", size);
 	if (size <= TINY) {
 		void *_r = ft_malloc.tiny_tail;
+
 		if (ft_malloc.tiny_tail + TINY > ft_malloc.tiny_head + INIT_SIZE) {
 			SPRINTF("MAP\n");
-			ft_malloc.tiny_tail = MMAP(INIT_SIZE);
-			ft_malloc.tiny_head = ft_malloc.tiny_tail;
-			return (ft_malloc.tiny_head);
+			_r = map_tiny();
 		}
+		((struct s_chunk_head *)ft_malloc.tiny_head)->binary_heap |= 0b00000000000000000000000000000001 << (_r - ft_malloc.tiny_head) / TINY;
+		SPRINTF("~[%12p;%12p] %p %4ld \033[32m",((struct s_chunk_head *)ft_malloc.tiny_head)->prev, ((struct s_chunk_head *)ft_malloc.tiny_head)->next, _r, (_r - ft_malloc.tiny_head) / TINY);
+		int i = 0;
+		int $ = ((struct s_chunk_head *)ft_malloc.tiny_head)->binary_heap;
+		while (i < 32) {
+			SPRINTF("%u", $ & 0b1);
+			$ = $ >> 1;
+			i += 1;
+		}
+		SPRINTF("\033[39m\n");
 		ft_malloc.tiny_tail += TINY;
 		return (_r);
 	}
 	if (size <= SMALL) {
 		void *_r = ft_malloc.small_tail;
+
 		if (ft_malloc.small_tail + SMALL > ft_malloc.small_head + INIT_SIZE) {
 			SPRINTF("MAP\n");
-			ft_malloc.small_tail = MMAP(INIT_SIZE);
-			ft_malloc.small_head = ft_malloc.small_tail;
-			return (ft_malloc.small_head);
+			_r = map_small();
 		}
+		((struct s_chunk_head *)ft_malloc.small_head)->binary_heap |= 0b00000000000000000000000000000001 << (_r - ft_malloc.small_head) / SMALL;
+		SPRINTF("~[%12p;%12p] %p %4ld \033[34m",((struct s_chunk_head *)ft_malloc.small_head)->prev, ((struct s_chunk_head *)ft_malloc.small_head)->next, _r, (_r - ft_malloc.small_head) / SMALL);
+		int i = 0;
+		int $ = ((struct s_chunk_head *)ft_malloc.small_head)->binary_heap;
+		while (i < 32) {
+			SPRINTF("%u", $ & 0b1);
+			$ = $ >> 1;
+			i += 1;
+		}
+		SPRINTF("\033[39m\n");
 		ft_malloc.small_tail += SMALL;
 		return (_r);
 	}

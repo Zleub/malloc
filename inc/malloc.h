@@ -38,7 +38,7 @@
 # define CHUNK_SIZE (getpagesize() * 8) // short limits
 # define INIT_SIZE CHUNK_SIZE
 
-# define TINY (size_t)(SMALL / 4)
+# define TINY (size_t)((getpagesize() / 4) - 1)
 # define SMALL (size_t)(getpagesize() / 4)
 # define LARGE (size_t)(getpagesize())
 
@@ -57,9 +57,10 @@ struct s_malloc {
 	int debug_fd;
 };
 
-struct s_ref {
-	void *self;
-	void *mmap;
+struct s_chunk_head {
+	unsigned int binary_heap;
+	void *prev;
+	void *next;
 };
 
 struct s_malloc ft_malloc;

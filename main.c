@@ -32,7 +32,7 @@
 // 	return (0);
 // }
 
-#define TESTSIZE 1024 // 4096 * 8
+#define TESTSIZE 64 // 4096 * 8
 
 int global_call_cmp;
 
