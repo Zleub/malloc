@@ -32,8 +32,8 @@
 
 # include <stdio.h>
 
-# define SPRINTF(args...) { char str[1024] = {0}; sprintf(str, args); ft_putstr_fd(str, ft_malloc.debug_fd); }
-// # define SPRINTF(args...) { (void)0; }
+// # define SPRINTF(args...) { char str[1024] = {0}; sprintf(str, args); ft_putstr_fd(str, ft_malloc.debug_fd); }
+# define SPRINTF(args...) { (void)0; }
 
 # define CHUNK_SIZE (getpagesize() * 8) // short limits
 # define INIT_SIZE CHUNK_SIZE
@@ -47,12 +47,18 @@
 # define MMAP(size) mmap(NULL, size, PROT_FLAGS, (MAP_FLAGS), -1, 0)
 
 struct s_malloc {
+	void *tiny_start;
+
 	void *tiny_head;
-	void *small_head;
-	void *free_head;
 	void *tiny_tail;
+
+	void *small_start;
+
+	void *small_head;
 	void *small_tail;
-	void *free_tail;
+
+	// void *free_head;
+	// void *free_tail;
 
 	int debug_fd;
 };
@@ -62,8 +68,6 @@ struct s_chunk_head {
 	void *prev;
 	void *next;
 };
-
-struct s_malloc ft_malloc;
 
 #define MAP(x) (((struct s_ref*)ft_malloc.global_head)[x])
 #define FREE(x) (((struct s_ref*)ft_malloc.free_head)[x])

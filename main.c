@@ -1,20 +1,7 @@
-//           `--::-.`
-//       ./shddddddddhs+.
-//     :yddddddddddddddddy:
-//   `sdddddddddddddddddddds`
-//  /ddddy:oddddddddds:sddddd/   @By: Debray Arnaud <adebray> - adebray@student.42.fr
-//  sdddddddddddddddddddddddds   @Last modified by: adebray
-//  sdddddddddddddddddddddddds
-//  :ddddddddddhyyddddddddddd:   @Created: 2017-08-12T09:29:05+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-09-28T20:22:32+02:00
-//    +ddddddh`+dh +dddddddo
-//     -sdddddh///sdddddds-
-//       .+ydddddddddhs/.
-//           .-::::-`
-
-#undef SUPPORT_ZONES
+// #undef SUPPORT_ZONES
 
 #include <malloc.h>
+#include <sys/time.h>
 
 // int main(void) {
 
@@ -32,11 +19,11 @@
 // 	return (0);
 // }
 
-#define TESTSIZE 64 // 4096 * 8
+#define TESTSIZE 128 // 4096 * 8
 
 int global_call_cmp;
 
-void show_alloc_mem();
+void show_alloc_mem(void);
 const char *getprogname(void);
 
 char *str = "dawdawdadwfawdsaLorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mattis risus sed hendrerit ornare. Suspendisse accumsan lectus a nisi aliquam molestie. Suspendisse pharetra sagittis tortor vel lacinia. Quisque gravida mi sit amet elit fermentum eleifend sed nec lorem. Donec varius porttitor ex, a pharetra eros tempor vitae. Donec dignissim volutpat gravida. Suspendisse auctor pharetra dolor eget ullamcorper. Aenean ultricies magna ut pretium faucibus.\
@@ -56,16 +43,19 @@ int main(int ac, char**argv) {
 	global_call_cmp = 0;
 
 	// debug();
-	// dprintf(2, "BEGINTEST\n")
 	(void)ac;
+	(void)array;
+	(void)cmp;
+	(void)i;
 	if (ac < 2) {
 		dprintf(2, "Dude\n");
 		return (-1);
 	}
 	while (i < TESTSIZE) {
 
-		int j = atoi(argv[1]); // || rand() % (16 * 16 * 3) + 5;
+		int j = atoi(argv[1]);
 		void *p = malloc( j );
+
 		if (p == 0) {
 			dprintf(2, "main: 0x0\n");
 			exit(-1);
@@ -82,22 +72,18 @@ int main(int ac, char**argv) {
 
 		// dprintf(2, "----------------------------------------------\n");
 		// dprintf(2, "%d\n", global_call_cmp);
-		// show_alloc_mem();
-		// int index = rand() % i;
-		// if (array[index]) {
-		// 	free(array[index]);
-		// 	array[index] = 0;
-		// }
+		int index = rand() % i;
+		if (array[index]) {
+			free(array[index]);
+			array[index] = 0;
+		}
 
 		i += 1;
 		global_call_cmp += 1;
 	}
-	void *p = malloc(666);
-	bzero(p, 665);
-	strncpy(p, str, 665);
 
+	show_alloc_mem();
 	char str[1024] = {0};
 	sprintf(str, "~~~ END %s ~~~\n", argv[0]);
-
 	ft_putstr(str);
 }

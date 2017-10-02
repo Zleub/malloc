@@ -16,7 +16,7 @@ make ; and for var in 4 1024 4096
 	set -x DYLD_INSERT_LIBRARIES (pwd)"/libft_malloc.dylib"
 	set -x DYLD_FORCE_FLAT_NAMESPACE 1
 
-	time -l ./dyn_test $var > /tmp/time 2> /tmp/time$var
+	time -l ./dyn_test $var 2> /tmp/time$var
 	# time -l ./dyn_void $var > /tmp/void_time 2> /tmp/void_time$var
 
 	set -x DYLD_INSERT_LIBRARIES ''
@@ -24,21 +24,19 @@ make ; and for var in 4 1024 4096
 
 	set -l reclaim_nono (grep -Eo '([0-9])+  page reclaims' /tmp/time$var | grep -Eow "[0-9]+")
 	# set -l reclaim_nono_void (grep -Eo '([0-9])+  page reclaims' /tmp/void_time$var | grep -Eow "[0-9]+")
-	set -l malloc_count (grep MALLOC log | wc -l)
-	set -l cache_count (grep CACHE log | wc -l)
-	set -l error_count (grep ERROR log | wc -l)
-	set -l new_map_count (grep MAP log | wc -l)
 
-	cp log log_$var
-	rm log
+	# set -l malloc_count (grep MALLOC log | wc -l)
+	# set -l cache_count (grep CACHE log | wc -l)
+	# set -l error_count (grep ERROR log | wc -l)
+	# set -l new_map_count (grep MAP log | wc -l)
+
+	# cp log log_$var
 
 	if math $reclaim_nono' < '$reclaim_sys > /tmp/res
 		echo -e '---- \033[32m '$var'\033[0m ----'
 	else
 		echo -e '---- \033[31m '$var'\033[0m ----'
 	end
-
-	echo $reclaim_nono' < '$reclaim_sys' -> '(cat /tmp/res)
 
 	if math $malloc_count' > 0' > /tmp/res
 
