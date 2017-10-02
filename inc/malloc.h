@@ -1,16 +1,14 @@
-//           `--::-.`
-//       ./shddddddddhs+.
-//     :yddddddddddddddddy:
-//   `sdddddddddddddddddddds`
-//  /ddddy:oddddddddds:sddddd/   @By: Debray Arnaud <adebray> - adebray@student.42.fr
-//  sdddddddddddddddddddddddds   @Last modified by: adebray
-//  sdddddddddddddddddddddddds
-//  :ddddddddddhyyddddddddddd:   @Created: 2017-08-12T09:29:04+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-09-28T20:37:50+02:00
-//    +ddddddh`+dh +dddddddo
-//     -sdddddh///sdddddds-
-//       .+ydddddddddhs/.
-//           .-::::-`
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   malloc.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/10/03 00:21:16 by adebray           #+#    #+#             */
+/*   Updated: 2017/10/03 01:24:16 by adebray          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
@@ -32,11 +30,15 @@
 
 # include <stdio.h>
 
-// # define SPRINTF(args...) { char str[1024] = {0}; sprintf(str, args); ft_putstr_fd(str, ft_malloc.debug_fd); }
+/*
+** # define SPRINTF(args...) { char str[1024] = {0}; \
+**     sprintf(str, args); \
+**     ft_putstr_fd(str, ft_malloc.debug_fd); \
+** }
+*/
 # define SPRINTF(args...) { (void)0; }
 
-# define CHUNK_SIZE (getpagesize() * 8) // short limits
-# define INIT_SIZE CHUNK_SIZE
+# define CHUNK_SIZE (getpagesize() * 8)
 
 # define TINY (size_t)((getpagesize() / 4) - 1)
 # define SMALL (size_t)(getpagesize() / 4)
@@ -46,36 +48,32 @@
 # define MAP_FLAGS (MAP_ANONYMOUS | MAP_PRIVATE)
 # define MMAP(size) mmap(NULL, size, PROT_FLAGS, (MAP_FLAGS), -1, 0)
 
-struct s_malloc {
-	void *tiny_start;
+struct	s_malloc {
+	void	*tiny_start;
 
-	void *tiny_head;
-	void *tiny_tail;
+	void	*tiny_head;
+	void	*tiny_tail;
 
-	void *small_start;
+	void	*small_start;
 
-	void *small_head;
-	void *small_tail;
+	void	*small_head;
+	void	*small_tail;
 
-	// void *free_head;
-	// void *free_tail;
-
-	int debug_fd;
+	int		debug_fd;
 };
 
-struct s_chunk_head {
-	unsigned int binary_heap;
-	void *prev;
-	void *next;
+struct	s_chunk_head {
+	unsigned int	binary_heap;
+	void			*prev;
+	void			*next;
 };
 
-#define MAP(x) (((struct s_ref*)ft_malloc.global_head)[x])
-#define FREE(x) (((struct s_ref*)ft_malloc.free_head)[x])
-
-void free(void *ptr);
-void *malloc(size_t size);
-void *realloc(void *ptr, size_t size);
-void show_alloc_mem(void);
-void *last_hand_cache(void *ptr, size_t size);
+void	free(void *ptr);
+void	*malloc(size_t size);
+void	*realloc(void *ptr, size_t size);
+void	show_alloc_mem(void);
+void	init(void);
+void	*map_tiny(void);
+void	*map_small(void);
 
 #endif

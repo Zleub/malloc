@@ -24,17 +24,22 @@ DYNAMIC_NAME = libft_malloc_$(HOSTTYPE).$(DYNAMIC_EXT)
 SRC = src/malloc.c src/utils.c
 OBJ = $(subst .c,.o,$(SRC))
 
+TESTS = test/test.c test/run.c
+TESTS_OBJ = $(subst .c,.o,$(TESTS))
+
 export CC = clang
 export CFLAGS = -O3 -Wall -Werror -Wextra -Iinc -Ilibft/inc -Ift_printf/inc
 export LDFLAGS = -Llibft -lft -Lft_printf -lftprintf
 
 all: dep $(NAME) tests
 
-%.o: %.c
-	m4 cheat.m4 $< | $(CC) $(CFLAGS) -c -o $@ -xc -
+test/%.o: test/%.c
+	$(CC) $(CFLAGS) $(LDFLAGS) -undefined dynamic_lookup -o $(*F).out $<
 
-tests: main.o
-	$(CC) $(CFLAGS) $(LDFLAGS) -undefined dynamic_lookup -o test main.o
+%.o: %.c
+	m4 inc/malloc.m4 $< | $(CC) -fPIC $(CFLAGS) -c -o $@ -xc -
+
+tests: $(TESTS_OBJ)
 
 $(NAME): $(OBJ)
 	$(CC) -dynamiclib -fPIC -o $(DYNAMIC_NAME) $^ libft/libft.a ft_printf/libftprintf.a
@@ -46,11 +51,11 @@ $(NAME): $(OBJ)
 	ln -s $(DYNAMIC_NAME) libft_malloc.$(DYNAMIC_EXT)
 
 clean:
-	rm -f $(OBJ) main.o
+	rm -f $(OBJ) $(TESTS_OBJ)
 	make -C libft clean
 
 fclean:
-	rm -f $(OBJ) main.o
+	rm -f $(OBJ) $(TESTS_OBJ) $(subst .o,.out,$(TESTS_OBJ))
 	rm -rf libft_malloc.$(DYNAMIC_EXT)
 	rm -f $(DYNAMIC_NAME)
 	rm -rf libft_malloc.$(STATIC_EXT)
