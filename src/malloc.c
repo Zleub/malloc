@@ -6,13 +6,16 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/03 00:35:03 by adebray           #+#    #+#             */
-/*   Updated: 2017/10/03 01:40:07 by adebray          ###   ########.fr       */
+/*   Updated: 2017/10/04 00:38:10 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <malloc.h>
+#include <ft_printf.h>
 
 struct s_malloc ft_malloc;
+
+include()
 
 void	*map_tiny(void)
 {
@@ -34,11 +37,20 @@ void	*malloc(size_t size)
 		m4_alloc(TINY);
 	if (size <= SMALL)
 		m4_alloc(SMALL);
-	p = MMAP(size + 4);
-	*((int *)p) = size;
+	p = MMAP(size + (sizeof(struct s_chunk_head)));
+	if (!ft_malloc.large_head)
+		ft_malloc.large_head = (ft_malloc.large_tail = p);
+	else
+		((struct s_chunk_head*)ft_malloc.large_tail)->next = p;
+	*((struct s_chunk_head *)p) = (struct s_chunk_head){
+		.binary_heap = size,
+		.prev = ft_malloc.large_tail,
+		.next = NULL
+	};
+	ft_malloc.large_tail = p;
 	if (p == MAP_FAILED)
 		return (0);
-	return (p + 4);
+	return (p + (sizeof(struct s_chunk_head)));
 }
 
 void	free(void *p)
@@ -49,6 +61,7 @@ void	free(void *p)
 
 void	*realloc(void *p, size_t size)
 {
+	struct s_chunk_head *h;
 	int		size_;
 	void	*np;
 
@@ -61,8 +74,9 @@ void	*realloc(void *p, size_t size)
 		ft_strncpy(np, p, size_);
 	else if (p != NULL)
 	{
-		ft_strncpy(np, p, *((int *)(p - 4)));
-		munmap(p - 4, *((int *)(p - 4)));
+		h = (p - sizeof(struct s_chunk_head));
+		ft_strncpy(np, p, h->binary_heap);
+		munmap(p - 4, h->binary_heap);
 	}
 	return (np);
 }

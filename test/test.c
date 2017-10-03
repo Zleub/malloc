@@ -6,7 +6,7 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/03 00:59:41 by adebray           #+#    #+#             */
-/*   Updated: 2017/10/03 01:38:12 by adebray          ###   ########.fr       */
+/*   Updated: 2017/10/04 00:34:05 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <malloc.h>
 #include <sys/time.h>
 
-#define TESTSIZE 1024
+#define TESTSIZE 120
 
 char *g_str = "dawdarem ipsum dolor sit amet,\
 consectetur adipNam mattis risus sed hendrerit ornare. \

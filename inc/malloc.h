@@ -6,7 +6,7 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/03 00:21:16 by adebray           #+#    #+#             */
-/*   Updated: 2017/10/03 01:24:16 by adebray          ###   ########.fr       */
+/*   Updated: 2017/10/04 00:27:53 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ struct	s_malloc {
 
 	void	*small_head;
 	void	*small_tail;
+
+	void	*large_head;
+	void	*large_tail;
 
 	int		debug_fd;
 };

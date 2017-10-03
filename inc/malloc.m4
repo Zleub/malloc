@@ -3,6 +3,8 @@ define(m4_map, `
 	void *head_save = ft_malloc.`'lowcase($1)_head;
 	if (ft_malloc.`'lowcase($1)_head) {
 		((struct s_chunk_head *)ft_malloc.`'lowcase($1)_head)->next = MMAP(CHUNK_SIZE);
+		if (((struct s_chunk_head *)ft_malloc.`'lowcase($1)_head)->next == MAP_FAILED)
+			return (0);
 		ft_malloc.`'lowcase($1)_head = ((struct s_chunk_head *)ft_malloc.`'lowcase($1)_head)->next;
 	}
 	else {

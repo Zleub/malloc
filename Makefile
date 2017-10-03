@@ -55,7 +55,7 @@ clean:
 	make -C libft clean
 
 fclean:
-	rm -f $(OBJ) $(TESTS_OBJ) $(subst .o,.out,$(TESTS_OBJ))
+	rm -f $(OBJ) $(TESTS_OBJ) test.out run.out
 	rm -rf libft_malloc.$(DYNAMIC_EXT)
 	rm -f $(DYNAMIC_NAME)
 	rm -rf libft_malloc.$(STATIC_EXT)

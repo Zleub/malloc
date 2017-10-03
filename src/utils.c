@@ -6,7 +6,7 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/03 00:26:32 by adebray           #+#    #+#             */
-/*   Updated: 2017/10/03 01:24:51 by adebray          ###   ########.fr       */
+/*   Updated: 2017/10/04 00:33:00 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void	gradient(int c)
 	int a;
 	int x;
 
-	x = 0;
-	while (x < c)
+	x = 1;
+	while (x < c + 1)
 	{
 		a = (x / 6) > 5 ? 6 - (x / 6) : 5;
 		ft_printf("\x1B[38;5;%dm•\x1B[0m", COLORIZE(
@@ -58,11 +58,14 @@ static void	pretty_print(struct s_chunk_head *h)
 		while (i < 32)
 		{
 			if ((b & 0x1) != 0)
+			{
 				b = b >> 1;
-			c += 1;
+				c += 1;
+			}
 			i += 1;
 		}
 		c = (c * 42) / 32;
+		ft_printf("[%p -> %p] ", h, h + CHUNK_SIZE);
 		gradient(c);
 		h = h->next;
 	}
@@ -70,8 +73,17 @@ static void	pretty_print(struct s_chunk_head *h)
 
 void		show_alloc_mem(void)
 {
+	struct s_chunk_head *h;
+
 	ft_printf("~ TINY\n");
 	pretty_print(ft_malloc.tiny_head);
 	ft_printf("~ SMALL\n");
 	pretty_print(ft_malloc.small_head);
+	ft_printf("~ LARGE\n");
+	h = ft_malloc.large_head;
+	while (h)
+	{
+		ft_printf("[%p] %u\n", h, h->binary_heap);
+		h = h->next;
+	}
 }
