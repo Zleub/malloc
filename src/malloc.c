@@ -6,7 +6,7 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/03 00:35:03 by adebray           #+#    #+#             */
-/*   Updated: 2017/10/04 00:38:10 by adebray          ###   ########.fr       */
+/*   Updated: 2017/10/04 01:44:19 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ void	*realloc(void *p, size_t size)
 	{
 		h = (p - sizeof(struct s_chunk_head));
 		ft_strncpy(np, p, h->binary_heap);
-		munmap(p - 4, h->binary_heap);
+		ft_printf("%p %d\n", p, size);
+		ft_printf("%d\n", h == ft_malloc.large_head);
+		munmap(h, h->binary_heap);
 	}
 	return (np);
 }

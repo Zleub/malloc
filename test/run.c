@@ -6,7 +6,7 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/03 00:58:09 by adebray           #+#    #+#             */
-/*   Updated: 2017/10/03 15:36:55 by adebray          ###   ########.fr       */
+/*   Updated: 2017/10/04 01:40:55 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int		main(void)
 	ft_printf(s);
 	ft_strncpy(s, "ade", 3);
 	ft_printf(s);
-	show_alloc_mem();
 	s2 = realloc(s, 4092);
 	ft_printf(s2);
 	ft_strncpy(s2, "## <<>> <<>> ##\n", 16);
 	ft_printf(s2);
+	ft_printf("%s\n", (s == s2) ? "true" : "false" );
 	free(s2);
-	free(s);
+	show_alloc_mem();
 	return (0);
 }
