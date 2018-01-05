@@ -36,7 +36,7 @@ all: dep $(NAME) tests
 test/%.o: test/%.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -undefined dynamic_lookup -o $(*F).out $<
 
-%.o: %.c
+%.o: %.c inc/malloc.m4 inc/malloc.h
 	m4 inc/malloc.m4 $< | $(CC) -fPIC $(CFLAGS) -c -o $@ -xc -
 
 tests: $(TESTS_OBJ)

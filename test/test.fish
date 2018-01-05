@@ -3,7 +3,7 @@ make ; and for var in 4 1024 4096
 	rm -rf /tmp/time /tmp/sys_time
 
 	# time -l ./dyn_void # 174
-	time -l ./dyn_test $var > /tmp/time 2> /tmp/sys_time
+	time -l ./test.out $var > /tmp/time 2> /tmp/sys_time
 	# time -l ./dyn_void $var > /tmp/void_time 2> /tmp/sys_void_time
 
 	set -l real_sys (grep -Eo '([0-9.])+ real' /tmp/sys_time)
@@ -16,7 +16,7 @@ make ; and for var in 4 1024 4096
 	set -x DYLD_INSERT_LIBRARIES (pwd)"/libft_malloc.dylib"
 	set -x DYLD_FORCE_FLAT_NAMESPACE 1
 
-	time -l ./dyn_test $var 2> /tmp/time$var
+	time -l ./test.out $var 2> /tmp/time$var
 	# time -l ./dyn_void $var > /tmp/void_time 2> /tmp/void_time$var
 
 	set -x DYLD_INSERT_LIBRARIES ''

@@ -6,7 +6,7 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/03 00:26:32 by adebray           #+#    #+#             */
-/*   Updated: 2017/10/04 00:33:00 by adebray          ###   ########.fr       */
+/*   Updated: 2017/12/24 17:32:47 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@
 
 extern struct s_malloc ft_malloc;
 
+#include <fcntl.h>
+
 void		init(void)
 {
+	ft_malloc.debug_fd = 1; // open("./log", O_RDWR | O_CREAT | O_TRUNC);
 	map_tiny();
 	map_small();
+	SPRINTF("Hello World !\n");
 }
 
 static void	gradient(int c)
@@ -74,6 +78,9 @@ static void	pretty_print(struct s_chunk_head *h)
 void		show_alloc_mem(void)
 {
 	struct s_chunk_head *h;
+	struct s_chunk_head *_;
+	struct s_chunk_head *tmp;
+	unsigned long large_count;
 
 	ft_printf("~ TINY\n");
 	pretty_print(ft_malloc.tiny_head);
@@ -81,9 +88,18 @@ void		show_alloc_mem(void)
 	pretty_print(ft_malloc.small_head);
 	ft_printf("~ LARGE\n");
 	h = ft_malloc.large_head;
+	large_count = 0;
+	tmp = h;
 	while (h)
 	{
-		ft_printf("[%p] %u\n", h, h->binary_heap);
+		_ = h;
 		h = h->next;
+		if ((void*)h - (void*)_ == (long)LARGE) {
+			large_count += LARGE;
+		}
+		else {
+			tmp = _;
+			ft_printf("[%p] -> [%p] : %d\n", tmp, h, large_count);
+		}
 	}
 }

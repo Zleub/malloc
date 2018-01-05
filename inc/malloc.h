@@ -6,7 +6,7 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/03 00:21:16 by adebray           #+#    #+#             */
-/*   Updated: 2017/10/04 00:27:53 by adebray          ###   ########.fr       */
+/*   Updated: 2017/12/24 17:30:21 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@
 
 # include <stdio.h>
 
-/*
-** # define SPRINTF(args...) { char str[1024] = {0}; \
-**     sprintf(str, args); \
-**     ft_putstr_fd(str, ft_malloc.debug_fd); \
-** }
-*/
-# define SPRINTF(args...) { (void)0; }
+# define SPRINTF(args...) { \
+  char str[1024] = {0}; \
+  sprintf(str, args); \
+  ft_putstr_fd(str, ft_malloc.debug_fd); \
+}
+
+// # define SPRINTF(args...) { (void)0; }
 
 # define CHUNK_SIZE (getpagesize() * 8)
 

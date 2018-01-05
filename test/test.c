@@ -6,7 +6,7 @@
 /*   By: adebray <adebray@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/03 00:59:41 by adebray           #+#    #+#             */
-/*   Updated: 2017/10/04 01:32:49 by adebray          ###   ########.fr       */
+/*   Updated: 2017/12/15 11:07:06 by adebray          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	do_stuff(char *av, int i)
 	array[i] = p;
 	strncpy(p, g_str, j - 1);
 	p = realloc(p, j + 1);
-	if (strlen(p) != (unsigned long)j - 1)
-		dprintf(2, "I GOT AN ISSUE : %lu vs %d\n", strlen(p), j);
+	if (strlen(p) != (unsigned long)j + 1)
+		dprintf(2, "I GOT AN ISSUE : %lu vs %d\n", strlen(p), j + 1);
 	index = rand() % i;
 	if (array[index])
 	{
